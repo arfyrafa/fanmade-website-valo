@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Agent Detail — UNSCOPED</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* =========================================
+           DETAIL AGENT
+        ========================================= */
+
+        .agent-detail {
+            min-height: 80vh;
+            padding: 80px 24px 0;
+        }
+
+        .agent-detail-inner {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .agent-detail-image {
+            width: 100%;
+            max-width: 500px;
+            height: 550px;
+            object-fit: cover;
+            display: block;
+            margin-bottom: 30px;
+        }
+
+        .agent-detail h1 {
+            font-family: "Chakra Petch", sans-serif;
+            font-size: 64px;
+            margin: 10px 0;
+            color: #f5f5f2;
+        }
+
+        .agent-detail-role {
+            margin-bottom: 25px;
+        }
+
+        .agent-detail-description {
+            max-width: 700px;
+            line-height: 1.8;
+            font-size: 18px;
+            color: #aeb8c1;
+            margin-bottom: 0;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 40px;
+            text-decoration: none;
+        }
+
+
+        /* =========================================
+           KEMAMPUAN KHUSUS
+        ========================================= */
+
+        .abilities-section {
+            margin-top: 120px;
+            padding: 90px 0 130px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .abilities-section::before {
+            content: "";
+            position: absolute;
+
+            width: 600px;
+            height: 600px;
+
+            left: 100px;
+            top: 100px;
+
+            background: rgba(50, 65, 80, 0.12);
+
+            transform: rotate(25deg);
+
+            border-radius: 80px;
+
+            pointer-events: none;
+        }
+
+        .abilities-title {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 70px;
+        }
+
+        .abilities-title span {
+            display: block;
+
+            color: #8794a1;
+
+            font-family: "Chakra Petch", sans-serif;
+
+            font-size: 18px;
+
+            letter-spacing: 4px;
+
+            margin-bottom: 8px;
+        }
+
+        .abilities-title h2 {
+            margin: 0;
+
+            font-family: "Chakra Petch", sans-serif;
+
+            font-size: 76px;
+
+            line-height: 0.95;
+
+            color: #f5f5f2;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================================
+           AREA ABILITY
+        ========================================= */
+
+        .abilities-content {
+            position: relative;
+            z-index: 2;
+
+            display: grid;
+
+            grid-template-columns: 170px 1fr;
+
+            gap: 55px;
+
+            align-items: center;
+        }
+
+
+        /* =========================================
+           BUTTON Q E C X
+        ========================================= */
+
+        .ability-buttons {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 18px;
+        }
+
+        .ability-button {
+            width: 90px;
+            height: 90px;
+
+            border: 1px solid #39444f;
+
+            background: #131c25;
+
+            color: #8794a1;
+
+            cursor: pointer;
+
+            font-family: "Chakra Petch", sans-serif;
+
+            font-size: 28px;
+
+            font-weight: 600;
+
+            transition: all 0.25s ease;
+
+            position: relative;
+        }
+
+        .ability-button:hover {
+            border-color: #ff4655;
+
+            color: #ffffff;
+
+            transform: translateX(5px);
+        }
+
+        .ability-button.active {
+            background: #ff4655;
+
+            border-color: #ff4655;
+
+            color: #ffffff;
+
+            transform: translateX(8px);
+        }
+
+        .ability-button.active::before {
+            content: "";
+
+            position: absolute;
+
+            left: -5px;
+
+            top: 15px;
+
+            bottom: 15px;
+
+            width: 3px;
+
+            background: #ffffff;
+        }
+
+
+        /* =========================================
+           DETAIL ABILITY
+        ========================================= */
+
+        .ability-info {
+            display: grid;
+
+            grid-template-columns: 1.2fr 1fr;
+
+            gap: 45px;
+
+            align-items: center;
+        }
+
+
+        /* =========================================
+           GAMBAR / AREA VISUAL
+        ========================================= */
+
+        .ability-image {
+            width: 100%;
+
+            height: 330px;
+
+            background: #17212b;
+
+            border: 1px solid rgba(255, 255, 255, 0.07);
+
+            overflow: hidden;
+
+            position: relative;
+        }
+
+        .ability-image-placeholder {
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            background:
+                linear-gradient(135deg,
+                    rgba(35, 49, 62, 0.9),
+                    rgba(10, 16, 22, 0.95));
+
+            color: #647482;
+
+            font-family: "Chakra Petch", sans-serif;
+
+            letter-spacing: 3px;
+
+            font-size: 14px;
+        }
+
+        .ability-image-placeholder .ability-key {
+            font-size: 70px;
+
+            color: rgba(255, 255, 255, 0.08);
+
+            font-weight: 700;
+        }
+
+        /* GAMBAR ABILITY */
+
+        .ability-visual-image {
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+        }
+
+
+        /* =========================================
+           TEXT ABILITY
+        ========================================= */
+
+        .ability-text h3 {
+            font-family: "Chakra Petch", sans-serif;
+
+            font-size: 42px;
+
+            line-height: 1;
+
+            margin: 0 0 25px;
+
+            color: #f5f5f2;
+
+            text-transform: uppercase;
+        }
+
+        .ability-text p {
+            color: #aeb8c1;
+
+            font-size: 17px;
+
+            line-height: 1.8;
+
+            margin: 0;
+        }
+
+        .ability-key-label {
+            display: inline-block;
+
+            margin-bottom: 15px;
+
+            color: #ff4655;
+
+            font-family: "Chakra Petch", sans-serif;
+
+            font-size: 14px;
+
+            letter-spacing: 3px;
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 800px) {
+
+            .agent-detail {
+                padding-top: 50px;
+            }
+
+            .agent-detail-image {
+                height: 450px;
+            }
+
+            .agent-detail h1 {
+                font-size: 52px;
+            }
+
+            .abilities-section {
+                margin-top: 80px;
+
+                padding-top: 70px;
+            }
+
+            .abilities-title h2 {
+                font-size: 55px;
+            }
+
+            .abilities-content {
+                grid-template-columns: 1fr;
+
+                gap: 40px;
+            }
+
+            .ability-buttons {
+                flex-direction: row;
+
+                flex-wrap: wrap;
+            }
+
+            .ability-button {
+                width: 70px;
+                height: 70px;
+
+                font-size: 22px;
+            }
+
+            .ability-info {
+                grid-template-columns: 1fr;
+
+                gap: 30px;
+            }
+
+            .ability-image {
+                height: 250px;
+            }
+
+            .ability-text h3 {
+                font-size: 34px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .agent-detail-image {
+                height: 400px;
+            }
+
+            .agent-detail h1 {
+                font-size: 42px;
+            }
+
+            .agent-detail-description {
+                font-size: 16px;
+            }
+
+            .abilities-title h2 {
+                font-size: 45px;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- =========================================
+         NAVBAR
+    ========================================= -->
+
+    <nav class="nav">
+
+        <div class="nav-inner">
+
+            <a href="index.html" class="nav-mark">
+                <span class="dot"></span> UNSCOPED
+            </a>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="character.html">Agent</a>
+                </li>
+
+                <li>
+                    <a href="gameplay.html">Gameplay</a>
+                </li>
+
+                <li>
+                    <a href="news.html">News</a>
+                </li>
+
+                <li>
+                    <a href="download.html">Play Now</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================================
+         DETAIL AGENT
+    ========================================= -->
+
+    <main class="agent-detail">
+
+        <div class="agent-detail-inner">
+
+            <a href="character.html" class="badge back-button">
+                ← Kembali ke Agent
+            </a>
+
+
+            <!-- GAMBAR AGENT -->
+
+            <img id="agentImage" class="agent-detail-image" src="" alt="Agent">
+
+
+            <!-- ROLE -->
+
+            <span id="agentRole" class="badge"></span>
+
+
+            <!-- NAMA -->
+
+            <h1 id="agentName"></h1>
+
+
+            <!-- DESKRIPSI -->
+
+            <p id="agentDescription" class="agent-detail-description">
+            </p>
+
+
+            <!-- =========================================
+                 KEMAMPUAN KHUSUS
+            ========================================= -->
+
+            <section class="abilities-section">
+
+                <div class="abilities-title">
+
+                    <span>KEMAMPUAN</span>
+
+                    <h2>KHUSUS</h2>
+
+                </div>
+
+
+                <div class="abilities-content">
+
+
+                    <!-- =================================
+                         BUTTON Q E C X
+                    ================================== -->
+
+                    <div class="ability-buttons" id="abilityButtons">
+                    </div>
+
+
+                    <!-- =================================
+                         DETAIL ABILITY
+                    ================================== -->
+
+                    <div class="ability-info">
+
+
+                        <!-- VISUAL -->
+
+                        <div class="ability-image">
+
+                            <div class="ability-image-placeholder" id="abilityVisual">
+
+                                <span class="ability-key" id="abilityKeyVisual">
+                                    Q
+                                </span>
+
+                                <span id="abilityVisualText">
+                                    ABILITY VISUAL
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TEXT -->
+
+                        <div class="ability-text">
+
+                            <span class="ability-key-label" id="abilityKeyLabel">
+                                ABILITY Q
+                            </span>
+
+                            <h3 id="abilityName">
+                                ABILITY
+                            </h3>
+
+                            <p id="abilityDescription">
+                                Deskripsi kemampuan Agent akan muncul di sini.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================= -->
+
+    <script>
+
+        /* =========================================
+           DATA AGENT
+        ========================================= */
+
+        const agents = {
+
+            "Waylay": {
+                role: "Duelist",
+                image: "assets/agents/waylay.avif",
+                description:
+                    "Agent dengan gaya bermain agresif yang mengandalkan mobilitas tinggi untuk membuka ruang dan mengejar musuh."
+            },
+
+            "Vyse": {
+                role: "Sentinel",
+                image: "assets/agents/vyse.avif",
+                description:
+                    "Mengendalikan area dan membatasi pergerakan lawan untuk membantu tim mempertahankan posisi."
+            },
+
+            "Viper": {
+                role: "Controller",
+                image: "assets/agents/viper.avif",
+                description:
+                    "Menggunakan racun dan dinding gas untuk mengontrol area serta memisahkan posisi lawan."
+            },
+
+            "Veto": {
+                role: "Initiator",
+                image: "assets/agents/veto.avif",
+                description:
+                    "Agent yang dirancang untuk mengganggu kemampuan lawan dan membuka peluang bagi tim."
+            },
+
+            "Tejo": {
+                role: "Initiator",
+                image: "assets/agents/tejo.avif",
+                description:
+                    "Menggunakan kemampuan jarak jauh untuk memberikan tekanan dan membuka area bagi tim."
+            },
+
+            "Sova": {
+                role: "Initiator",
+                image: "assets/agents/sova.avif",
+                description:
+                    "Mengumpulkan informasi posisi lawan dan membantu tim menentukan langkah berikutnya."
+            },
+
+            "Skye": {
+                role: "Initiator",
+                image: "assets/agents/skye.avif",
+                description:
+                    "Membantu tim dengan kemampuan informasi, flash, dan dukungan untuk membuka area."
+            },
+
+            "Sage": {
+                role: "Sentinel",
+                image: "assets/agents/sage.avif",
+                description:
+                    "Mendukung tim dengan kemampuan penyembuhan, perlindungan, dan pengendalian area."
+            },
+
+            "Reyna": {
+                role: "Duelist",
+                image: "assets/agents/reyna.avif",
+                description:
+                    "Duelist yang sangat bergantung pada kemampuan memenangkan pertarungan individu."
+            },
+
+            "Raze": {
+                role: "Duelist",
+                image: "assets/agents/raze.avif",
+                description:
+                    "Mengandalkan ledakan dan kemampuan area untuk membersihkan posisi lawan."
+            },
+
+            "Phoenix": {
+                role: "Duelist",
+                image: "assets/agents/phoenix.avif",
+                description:
+                    "Duelist dengan kemampuan api yang dapat membantu mengambil ruang dan memenangkan duel."
+            },
+
+            "Jett": {
+                role: "Duelist",
+                image: "assets/agents/jett.avif",
+                description:
+                    "Mengandalkan kecepatan dan mobilitas untuk bergerak cepat serta menciptakan ruang."
+            },
+
+            "Iso": {
+                role: "Duelist",
+                image: "assets/agents/iso.avif",
+                description:
+                    "Duelist yang berfokus pada pertarungan satu lawan satu dan kemampuan bertahan dalam duel."
+            },
+
+            "Harbor": {
+                role: "Controller",
+                image: "assets/agents/harbor.avif",
+                description:
+                    "Menggunakan kemampuan berbasis air untuk membuat perlindungan dan mengontrol jalur pertempuran."
+            },
+
+            "Gekko": {
+                role: "Initiator",
+                image: "assets/agents/gekko.avif",
+                description:
+                    "Memanfaatkan makhluk-makhluk kecilnya untuk membantu menguasai area dan mendukung tim."
+            },
+
+            "Fade": {
+                role: "Initiator",
+                image: "assets/agents/fade.avif",
+                description:
+                    "Menggunakan kemampuan berbasis informasi untuk melacak dan mengganggu posisi lawan."
+            },
+
+            "Deadlock": {
+                role: "Sentinel",
+                image: "assets/agents/deadlock.avif",
+                description:
+                    "Menggunakan teknologi khusus untuk membatasi pergerakan dan mengendalikan area."
+            },
+
+            "Cypher": {
+                role: "Sentinel",
+                image: "assets/agents/cypher.avif",
+                description:
+                    "Spesialis informasi yang menjaga area dan mendeteksi pergerakan lawan."
+            },
+
+            "Clove": {
+                role: "Controller",
+                image: "assets/agents/clove.avif",
+                description:
+                    "Controller dengan gaya bermain fleksibel yang tetap dapat membantu tim bahkan setelah terkena eliminasi."
+            },
+
+            "Chamber": {
+                role: "Sentinel",
+                image: "assets/agents/chamber.avif",
+                description:
+                    "Sentinel yang mengandalkan senjata khusus dan kemampuan mobilitas untuk menjaga area."
+            },
+
+            "Brimstone": {
+                role: "Controller",
+                image: "assets/agents/brimstone.avif",
+                description:
+                    "Mengontrol medan pertempuran menggunakan smoke, area denial, dan dukungan dari jarak jauh."
+            },
+
+            "Brance": {
+                role: "Agent",
+                image: "assets/agents/brance.avif",
+                description:
+                    "Agent tambahan dalam roster showcase UNSCOPED."
+            },
+
+            "Astra": {
+                role: "Controller",
+                image: "assets/agents/astra.avif",
+                description:
+                    "Mengendalikan medan pertempuran dengan kemampuan yang dapat ditempatkan dari jarak jauh."
+            },
+
+            "Yoru": {
+                role: "Duelist",
+                image: "assets/agents/yoru.avif",
+                description:
+                    "Duelist yang mengandalkan tipu daya, teleportasi, dan pergerakan tak terduga untuk mengecoh lawan."
+            },
+
+            "Omen": {
+                role: "Controller",
+                image: "assets/agents/omen.avif",
+                description:
+                    "Agent misterius yang menggunakan bayangan untuk mengendalikan area dan mengecoh lawan."
+            },
+
+            "Neon": {
+                role: "Duelist",
+                image: "assets/agents/neon.avif",
+                description:
+                    "Duelist dengan kecepatan tinggi yang memanfaatkan energi listrik untuk bergerak agresif."
+            },
+
+            "Killjoy": {
+                role: "Sentinel",
+                image: "assets/agents/killjoy.avif",
+                description:
+                    "Sentinel yang menggunakan berbagai perangkat teknologi untuk menjaga dan mengamankan area."
+            },
+
+            "KAY/O": {
+                role: "Initiator",
+                image: "assets/agents/kay-o.avif",
+                description:
+                    "Agent yang dirancang untuk menekan kemampuan lawan dan membantu tim."
+            },
+
+            "Miks": {
+                role: "Controller",
+                image: "assets/agents/miks.avif",
+                description:
+                    "Agent tambahan dalam roster showcase UNSCOPED dengan kemampuan unik untuk mendukung tim."
+            }
+
+        };
+
+
+        /* =========================================
+           DATA ABILITY
+        ========================================= */
+
+        const abilities = {
+
+            /* =====================================
+               ASTRA
+            ===================================== */
+
+            "Astra": [
+
+                {
+                    key: "Q",
+                    name: "NOVA PULSE",
+                    description:
+                        "Mengaktifkan Star untuk memberikan efek concuss pada area.",
+                    visual:
+                        "assets/agents/astra-q.avif"
+                },
+
+                {
+                    key: "E",
+                    name: "NEBULA",
+                    description:
+                        "Mengaktifkan Star menjadi smoke.",
+                    visual:
+                        "assets/agents/astra-e.avif"
+                },
+
+                {
+                    key: "C",
+                    name: "GRAVITY WELL",
+                    description:
+                        "Membuat area yang menarik pemain ke pusatnya.",
+                    visual:
+                        "assets/agents/astra-c.avif"
+                },
+
+                {
+                    key: "X",
+                    name: "ASTRAL FORM",
+                    description:
+                        "Masuk ke Astral Form dan menggunakan kemampuan Astra dari sana.",
+                    visual:
+                        "assets/agents/astra-x.avif"
+                }
+
+            ],
+
+
+            /* =====================================
+               SKYE
+            ===================================== */
+
+            "Skye": [
+
+                {
+                    key: "Q",
+                    name: "TRAILBLAZER",
+                    description:
+                        "Lengkapi dengan harimau Tasmania. KIRIM untuk mengendalikan predator dan mencari musuh. Predator dapat menerkam lawan untuk memberikan efek concuss.",
+                    visual:
+                        "TRAILBLAZER"
+                },
+
+                {
+                    key: "E",
+                    name: "GUIDING LIGHT",
+                    description:
+                        "Lengkapi dengan elang. KIRIM untuk menerbangkan elang ke arah target dan aktifkan kembali untuk membuatnya berubah menjadi flash.",
+                    visual:
+                        "GUIDING LIGHT"
+                },
+
+                {
+                    key: "C",
+                    name: "REGROWTH",
+                    description:
+                        "Lengkapi dengan kemampuan penyembuhan. TAHAN untuk menyalurkan energi dan menyembuhkan rekan satu tim dalam jangkauan.",
+                    visual:
+                        "REGROWTH"
+                },
+
+                {
+                    key: "X",
+                    name: "SEEKERS",
+                    description:
+                        "Lengkapi dengan Seeker. KIRIM tiga Seeker yang akan mencari tiga musuh terdekat. Jika mencapai target, Seeker akan mengganggu penglihatan mereka.",
+                    visual:
+                        "SEEKERS"
+                }
+
+            ]
+
+        };
+
+
+        /* =========================================
+           AMBIL AGENT DARI URL
+        ========================================= */
+
+        const params =
+            new URLSearchParams(window.location.search);
+
+        const agentName =
+            params.get("agent");
+
+        const agent =
+            agents[agentName];
+
+
+        /* =========================================
+           ELEMENT HTML
+        ========================================= */
+
+        const agentNameElement =
+            document.getElementById("agentName");
+
+        const agentRoleElement =
+            document.getElementById("agentRole");
+
+        const agentImageElement =
+            document.getElementById("agentImage");
+
+        const agentDescriptionElement =
+            document.getElementById("agentDescription");
+
+
+        /* =========================================
+           ELEMENT ABILITY
+        ========================================= */
+
+        const abilityButtons =
+            document.getElementById("abilityButtons");
+
+        const abilityNameElement =
+            document.getElementById("abilityName");
+
+        const abilityDescriptionElement =
+            document.getElementById("abilityDescription");
+
+        const abilityKeyLabel =
+            document.getElementById("abilityKeyLabel");
+
+        const abilityVisual =
+            document.getElementById("abilityVisual");
+
+        const abilityKeyVisual =
+            document.getElementById("abilityKeyVisual");
+
+        const abilityVisualText =
+            document.getElementById("abilityVisualText");
+
+
+        /* =========================================
+           TAMPILKAN DATA AGENT
+        ========================================= */
+
+        if (agent) {
+
+            agentNameElement.textContent =
+                agentName;
+
+            agentRoleElement.textContent =
+                agent.role;
+
+            agentImageElement.src =
+                agent.image;
+
+            agentImageElement.alt =
+                agentName;
+
+            agentDescriptionElement.textContent =
+                agent.description;
+
+        } else {
+
+            agentNameElement.textContent =
+                "Agent tidak ditemukan";
+
+            agentDescriptionElement.textContent =
+                "Data Agent tidak tersedia.";
+
+        }
+
+
+        /* =========================================
+           DATA ABILITY AGENT SAAT INI
+        ========================================= */
+
+        const currentAbilities =
+            abilities[agentName] || [
+
+                {
+                    key: "Q",
+
+                    name: "ABILITY Q",
+
+                    description:
+                        "Informasi kemampuan Agent akan ditambahkan.",
+
+                    visual: "Q"
+                },
+
+                {
+                    key: "E",
+
+                    name: "ABILITY E",
+
+                    description:
+                        "Informasi kemampuan Agent akan ditambahkan.",
+
+                    visual: "E"
+                },
+
+                {
+                    key: "C",
+
+                    name: "ABILITY C",
+
+                    description:
+                        "Informasi kemampuan Agent akan ditambahkan.",
+
+                    visual: "C"
+                },
+
+                {
+                    key: "X",
+
+                    name: "ULTIMATE",
+
+                    description:
+                        "Informasi ultimate Agent akan ditambahkan.",
+
+                    visual: "X"
+                }
+
+            ];
+
+
+        /* =========================================
+           FUNGSI MENAMPILKAN ABILITY
+        ========================================= */
+
+        function showAbility(index) {
+
+            const ability =
+                currentAbilities[index];
+
+            if (!ability) return;
+
+
+            /* =====================================
+               NAMA
+            ===================================== */
+
+            abilityNameElement.textContent =
+                ability.name;
+
+
+            /* =====================================
+               DESKRIPSI
+            ===================================== */
+
+            abilityDescriptionElement.textContent =
+                ability.description;
+
+
+            /* =====================================
+               LABEL Q E C X
+            ===================================== */
+
+            abilityKeyLabel.textContent =
+                "ABILITY " + ability.key;
+
+
+            /* =====================================
+               VISUAL
+            ===================================== */
+
+            abilityVisual.innerHTML = "";
+
+
+            /*
+             * Kalau visual adalah file gambar,
+             * tampilkan gambar.
+             */
+
+            if (
+                ability.visual &&
+                ability.visual.startsWith("assets/")
+            ) {
+
+                const image =
+                    document.createElement("img");
+
+                image.src =
+                    ability.visual;
+
+                image.alt =
+                    ability.name;
+
+                image.className =
+                    "ability-visual-image";
+
+                abilityVisual.appendChild(image);
+
+            }
+
+            /*
+             * Kalau belum ada gambar,
+             * tampilkan placeholder.
+             */
+
+            else {
+
+                const key =
+                    document.createElement("span");
+
+                key.className =
+                    "ability-key";
+
+                key.textContent =
+                    ability.key;
+
+
+                const text =
+                    document.createElement("span");
+
+                text.textContent =
+                    "ABILITY VISUAL";
+
+
+                abilityVisual.appendChild(key);
+
+                abilityVisual.appendChild(text);
+
+            }
+
+
+            /* =====================================
+               HAPUS ACTIVE DARI SEMUA TOMBOL
+            ===================================== */
+
+            const allButtons =
+                document.querySelectorAll(
+                    ".ability-button"
+                );
+
+            allButtons.forEach(
+                button => {
+
+                    button.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+            /* =====================================
+               AKTIFKAN TOMBOL YANG DIPILIH
+            ===================================== */
+
+            const activeButton =
+                document.querySelector(
+                    `[data-index="${index}"]`
+                );
+
+            if (activeButton) {
+
+                activeButton.classList.add(
+                    "active"
+                );
+
+            }
+
+        }
+
+
+        /* =========================================
+           BUAT TOMBOL Q E C X
+        ========================================= */
+
+        currentAbilities.forEach(
+            (ability, index) => {
+
+                const button =
+                    document.createElement("button");
+
+
+                button.className =
+                    "ability-button";
+
+
+                button.dataset.index =
+                    index;
+
+
+                button.type =
+                    "button";
+
+
+                button.innerHTML =
+                    `<span>${ability.key}</span>`;
+
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        showAbility(index);
+
+                    }
+                );
+
+
+                abilityButtons.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        /* =========================================
+           ABILITY PERTAMA OTOMATIS AKTIF
+        ========================================= */
+
+        showAbility(0);
+
+    </script>
+
+</body>
+
+</html>
