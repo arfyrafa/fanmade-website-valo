@@ -1,0 +1,1761 @@
+/* =========================================================
+   FAN-MADE VALORANT SHOWCASE — DESIGN SYSTEM
+   Tactical HUD aesthetic
+   ========================================================= */
+
+:root {
+  --ink: #0A0E12;
+  --ink-raised: #121820;
+  --ink-line: #232C35;
+  --paper: #ECEAE4;
+  --paper-dim: #9AA3AC;
+  --signal: #E8433D;
+  --signal-dim: #5C211E;
+  --cyan: #5EEAD4;
+
+  --font-display: 'Chakra Petch', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --container: 1180px;
+  --cut: 14px;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* =========================================================
+   CONTAINER
+   ========================================================= */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+
+h1,
+h2,
+h3,
+.display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2.6rem, 6vw, 5rem);
+}
+
+h2 {
+  font-size: clamp(1.9rem, 4vw, 3rem);
+}
+
+h3 {
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+}
+
+p {
+  max-width: 62ch;
+  color: var(--paper-dim);
+}
+
+p.lede {
+  max-width: 56ch;
+  font-size: 1.1rem;
+  color: var(--paper);
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(10, 14, 18, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--ink-line);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  max-width: var(--container);
+  margin: 0 auto;
+}
+
+.nav-mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-mark span.dot {
+  width: 9px;
+  height: 9px;
+  background: var(--signal);
+  clip-path: polygon(50% 0,
+      100% 50%,
+      50% 100%,
+      0 50%);
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.nav-links a {
+  color: var(--paper-dim);
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.nav-links a:hover,
+.nav-links a[aria-current="page"] {
+  color: var(--paper);
+}
+
+.nav-links a[aria-current="page"]::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  background: var(--signal);
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--ink-line);
+  color: var(--paper);
+  padding: 8px 10px;
+  font-family: var(--font-display);
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   MOBILE NAV
+   ========================================================= */
+
+@media (max-width: 800px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--ink-raised);
+    flex-direction: column;
+    gap: 0;
+    border-bottom: 1px solid var(--ink-line);
+    display: none;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 16px 24px;
+    border-top: 1px solid var(--ink-line);
+  }
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 26px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  cursor: pointer;
+
+  clip-path: polygon(var(--cut) 0,
+      100% 0,
+      100% calc(100% - var(--cut)),
+      calc(100% - var(--cut)) 100%,
+      0 100%,
+      0 var(--cut));
+
+  transition:
+    transform 0.15s ease,
+    background 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--signal);
+  color: #180705;
+}
+
+.btn-primary:hover {
+  background: #ff5148;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--paper);
+  border-color: var(--ink-line);
+}
+
+.btn-ghost:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+
+/* =========================================================
+   BADGE
+   ========================================================= */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  border: 1px solid var(--ink-line);
+  padding: 6px 12px;
+}
+
+.badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+}
+
+
+/* =========================================================
+   HUD PANEL
+   ========================================================= */
+
+.hud-panel {
+  position: relative;
+  background: var(--ink-raised);
+  border: 1px solid var(--ink-line);
+  padding: 28px;
+
+  clip-path: polygon(var(--cut) 0,
+      100% 0,
+      100% calc(100% - var(--cut)),
+      calc(100% - var(--cut)) 100%,
+      0 100%,
+      0 var(--cut));
+}
+
+
+/* =========================================================
+   HUD CARD
+   ========================================================= */
+
+.hud-card {
+  position: relative;
+  background: var(--ink-raised);
+  border: 1px solid var(--ink-line);
+  padding: 22px;
+
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.hud-card::before,
+.hud-card::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--cyan);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.hud-card::before {
+  top: -1px;
+  left: -1px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.hud-card::after {
+  bottom: -1px;
+  right: -1px;
+  border-left: none;
+  border-top: none;
+}
+
+.hud-card:hover {
+  border-color: var(--ink-line);
+  transform: translateY(-3px);
+}
+
+.hud-card:hover::before,
+.hud-card:hover::after {
+  opacity: 1;
+}
+
+
+/* =========================================================
+   STAT STRIP
+   ========================================================= */
+
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1px;
+  background: var(--ink-line);
+  border: 1px solid var(--ink-line);
+}
+
+.stat-box {
+  background: var(--ink);
+  padding: 24px;
+  text-align: left;
+}
+
+.stat-box .num {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  color: var(--paper);
+}
+
+.stat-box .label {
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--ink-line);
+  padding-bottom: 18px;
+}
+
+.section-head .index {
+  font-family: var(--font-display);
+  color: var(--signal);
+  font-size: 0.9rem;
+}
+
+section {
+  padding: 96px 0;
+}
+
+section.tight {
+  padding: 64px 0;
+}
+
+
+/* =========================================================
+   AGENT AVATAR
+   =========================================================
+   Dibuat lebih pendek supaya gambar Agent tidak terlihat
+   terlalu besar / memenuhi seluruh card.
+   ========================================================= */
+
+.agent-avatar {
+  width: 100%;
+  height: 320px;
+
+  background:
+    linear-gradient(180deg,
+      transparent 55%,
+      rgba(232, 67, 61, 0.15) 100%),
+    var(--ink);
+
+  border: 1px solid var(--ink-line);
+
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =========================================================
+   AGENT AVATAR SCANLINE
+   ========================================================= */
+
+.agent-avatar::after {
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  background:
+    repeating-linear-gradient(0deg,
+      transparent,
+      transparent 3px,
+      rgba(255, 255, 255, 0.03) 3px,
+      rgba(255, 255, 255, 0.03) 4px);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   AGENT PLACEHOLDER
+   ========================================================= */
+
+.agent-avatar .placeholder-note {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  padding: 12px;
+
+  font-size: 0.72rem;
+  color: var(--paper-dim);
+
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   AGENT IMAGE
+   =========================================================
+   IMPORTANT:
+   width/height tidak 100% supaya gambar tidak memenuhi card.
+   ========================================================= */
+
+.agent-avatar img {
+  width: 90%;
+  height: 90%;
+
+  display: block;
+
+  object-fit: contain;
+  object-position: center;
+
+  background: transparent;
+
+  position: relative;
+  z-index: 1;
+
+  transition: transform 0.35s ease;
+}
+
+
+/* =========================================================
+   AGENT CARD PREMIUM SHOWCASE
+========================================================= */
+
+
+.grid-3 {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 24px;
+
+}
+
+
+.agent-card {
+
+  position: relative;
+
+  background:
+    linear-gradient(180deg,
+      rgba(18, 24, 32, .9),
+      rgba(5, 8, 12, .98));
+
+  border: 1px solid rgba(255, 255, 255, .08);
+
+  padding: 18px;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  transition:
+    transform .35s ease,
+    border-color .35s ease,
+    box-shadow .35s ease;
+
+}
+
+
+
+.agent-card:hover {
+
+  transform:
+    translateY(-12px);
+
+  border-color:
+    var(--signal);
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, .45);
+
+}
+
+
+
+.agent-avatar {
+
+  height: 420px;
+
+  margin-bottom: 20px;
+
+  border: none;
+
+  background:
+    linear-gradient(180deg,
+      transparent,
+      rgba(232, 67, 61, .18));
+
+}
+
+
+
+.agent-avatar img {
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  transform:
+    scale(1);
+
+  transition: .5s ease;
+
+}
+
+
+
+.agent-card:hover .agent-avatar img {
+
+  transform:
+    scale(1.08);
+
+}
+
+
+
+.agent-card h3 {
+
+  font-size: 36px;
+
+  margin: 12px 0;
+
+  letter-spacing: -1px;
+
+}
+
+
+
+.agent-card p {
+
+  font-size: 14px;
+
+  color: #9aa3ac;
+
+  line-height: 1.7;
+
+}
+
+
+
+/* CARD WARNA ROLE */
+
+
+.agent-card:nth-child(4n+1) {
+
+  --role-color: #ff4d73;
+
+}
+
+
+.agent-card:nth-child(4n+2) {
+
+  --role-color: #a76dff;
+
+}
+
+
+.agent-card:nth-child(4n+3) {
+
+  --role-color: #1de9a6;
+
+}
+
+
+.agent-card:nth-child(4n+4) {
+
+  --role-color: #37a8ff;
+
+}
+
+
+
+.agent-card .badge {
+
+  color: var(--role-color);
+
+  border-color: var(--role-color);
+
+}
+
+
+
+/* CARD PERTAMA FEATURED */
+
+.agent-card:first-child {
+
+  transform:
+    scale(1.04);
+
+  box-shadow:
+
+    0 0 40px rgba(255, 70, 85, .18);
+
+}
+
+
+.agent-card:first-child:hover {
+
+  transform:
+    scale(1.06) translateY(-10px);
+
+}
+
+
+/* MOBILE */
+
+@media(max-width:900px) {
+
+  .grid-3 {
+
+    grid-template-columns:
+      repeat(2, 1fr);
+
+  }
+
+
+  .agent-card:first-child {
+
+    transform: none;
+
+  }
+
+}
+
+
+@media(max-width:600px) {
+
+  .grid-3 {
+
+    grid-template-columns: 1fr;
+
+  }
+
+}
+
+/* =========================================================
+   ABILITY IMAGE
+   ========================================================= */
+
+.ability-visual {
+  width: 100%;
+  height: 260px;
+
+  background:
+    linear-gradient(135deg,
+      rgba(255, 70, 85, 0.08),
+      rgba(255, 255, 255, 0.015));
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 30px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ability-visual img {
+  width: 92%;
+  height: 92%;
+
+  display: block;
+
+  object-fit: contain;
+  object-position: center;
+
+  background: #080808;
+
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+  border-top: 1px solid var(--ink-line);
+  padding: 56px 0 32px;
+  background: var(--ink-raised);
+}
+
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  color: var(--paper-dim);
+}
+
+.disclaimer {
+  border-top: 1px solid var(--ink-line);
+  padding-top: 24px;
+
+  font-size: 0.82rem;
+  color: var(--paper-dim);
+}
+
+.disclaimer strong {
+  color: var(--paper);
+}
+
+
+/* =========================================================
+   HERO BOOT
+   ========================================================= */
+
+.boot {
+  opacity: 0;
+  transform: translateY(14px);
+
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.boot.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.boot.d1 {
+  transition-delay: 0.05s;
+}
+
+.boot.d2 {
+  transition-delay: 0.2s;
+}
+
+.boot.d3 {
+  transition-delay: 0.35s;
+}
+
+.boot.d4 {
+  transition-delay: 0.5s;
+}
+
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+
+/* =========================================================
+   FLEX
+   ========================================================= */
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 860px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   TABLET AGENT IMAGE
+   ========================================================= */
+
+@media (max-width: 860px) {
+  .agent-avatar {
+    height: 300px;
+  }
+
+  .agent-avatar img {
+    width: 88%;
+    height: 88%;
+  }
+}
+
+
+/* =========================================================
+   MOBILE AGENT IMAGE
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .agent-avatar {
+    height: 280px;
+  }
+
+  .agent-avatar img {
+    width: 90%;
+    height: 90%;
+  }
+
+  .ability-visual {
+    height: 210px;
+  }
+
+  .ability-visual img {
+    width: 92%;
+    height: 92%;
+    padding: 5px;
+  }
+}
+
+/* =========================================================
+   ABILITY VISUAL — FIX UKURAN GAMBAR
+   ========================================================= */
+
+.ability-visual {
+  width: 100%;
+  height: 260px;
+
+  background:
+    linear-gradient(135deg,
+      rgba(255, 70, 85, 0.08),
+      rgba(255, 255, 255, 0.015));
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 30px;
+  overflow: hidden;
+  position: relative;
+}
+
+
+/* GAMBAR ABILITY */
+.ability-visual img {
+  /* JANGAN dibuat 100% */
+  width: auto !important;
+  height: auto !important;
+
+  /* Batas ukuran gambar */
+  max-width: 55% !important;
+  max-height: 70% !important;
+
+  display: block;
+
+  object-fit: contain !important;
+  object-position: center;
+
+  background: transparent !important;
+  padding: 0 !important;
+
+  position: relative;
+  z-index: 1;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .ability-visual {
+    height: 210px;
+  }
+
+  .ability-visual img {
+    max-width: 55% !important;
+    max-height: 65% !important;
+    width: auto !important;
+    height: auto !important;
+  }
+}
+
+/* =========================================================
+   AGENT DETAIL PAGE — UNIFIED HERO + ABILITY SCENE
+   Satu gambar background menyatu di belakang hero & ability,
+   panel ability jadi kaca (glass) yang mengambang di atasnya.
+   ========================================================= */
+
+.agent-detail {
+  position: relative;
+  padding: 0;
+}
+
+/* SATU "PANGGUNG" YANG MEMUAT GAMBAR + HERO + ABILITY */
+.agent-scene {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+/* GAMBAR AGENT — FULL BLEED, MENUTUPI SELURUH SCENE */
+.agent-scene-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.agent-detail-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: 78% 18%;
+}
+
+/* VIGNETTE GELAP SUPAYA TEKS TERBACA — MENUTUPI SELURUH SCENE,
+   TERMASUK BAGIAN ABILITY DI BAWAHNYA (INI YANG BIKIN MENYATU) */
+.agent-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(100deg,
+      rgba(8, 10, 14, .97) 0%,
+      rgba(8, 10, 14, .90) 32%,
+      rgba(8, 10, 14, .40) 58%,
+      transparent 80%);
+}
+
+.agent-scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg,
+      transparent 60%,
+      rgba(8, 10, 14, .55) 88%,
+      var(--ink) 100%);
+}
+
+/* =========================================================
+   HERO TEXT
+   ========================================================= */
+
+.agent-main {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  min-height: 100vh;
+  padding: 140px clamp(24px, 6vw, 80px) 60px;
+}
+
+.agent-info {
+  width: min(560px, 52%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.agent-info .back-agent {
+  margin-bottom: 28px;
+}
+
+.agent-info .badge {
+  border-color: var(--signal);
+  color: var(--signal);
+}
+
+.agent-line {
+  width: 90px;
+  height: 3px;
+  background: var(--signal);
+  margin: 22px 0;
+}
+
+#agentName {
+  font-family: var(--font-display);
+  font-size: clamp(60px, 8vw, 110px);
+  line-height: .88;
+  letter-spacing: -3px;
+  margin: 0 0 22px;
+  color: var(--paper);
+}
+
+#agentDescription {
+  max-width: 560px;
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--paper-dim);
+}
+
+/* KARTU ABILITY — MENGAMBANG DI SISI KANAN, DI ATAS GAMBAR */
+.ability-content {
+  position: relative;
+  z-index: 2;
+  width: min(420px, 40%);
+  margin-left: auto;
+  padding: 26px;
+  background: rgba(9, 12, 17, .55);
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-left: 3px solid var(--signal);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 4px;
+}
+
+.ability-visual {
+  width: 100%;
+  height: 220px;
+  background:
+    linear-gradient(135deg,
+      rgba(255, 70, 85, .10),
+      rgba(255, 255, 255, .02));
+  border: 1px solid rgba(255, 255, 255, .08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ability-visual img {
+  max-width: 60%;
+  max-height: 70%;
+  object-fit: contain;
+}
+
+.ability-placeholder {
+  text-align: center;
+  color: var(--paper-dim);
+}
+
+.ability-placeholder-key {
+  font-family: var(--font-display);
+  font-size: 60px;
+  font-weight: 700;
+  color: rgba(255, 70, 85, .75);
+}
+
+.ability-placeholder-text {
+  margin-top: 8px;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--paper-dim);
+}
+
+.ability-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.ability-key-label {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--signal);
+  color: #180705;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.ability-type {
+  color: var(--paper-dim);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+#abilityName {
+  font-family: var(--font-display);
+  font-size: 28px;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+
+#abilityDescription {
+  color: var(--paper-dim);
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* TOMBOL Q E C X — DI BAWAH DESKRIPSI, DALAM SATU BARIS */
+.ability-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.ability-button {
+  width: 78px;
+  height: 78px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  background: rgba(9, 12, 17, .55);
+  backdrop-filter: blur(8px);
+  color: var(--paper-dim);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-family: var(--font-display);
+  transition: .2s ease;
+}
+
+.ability-button:hover {
+  border-color: var(--signal);
+  color: var(--paper);
+}
+
+.ability-button.active {
+  background: var(--signal);
+  color: #180705;
+  border-color: var(--signal);
+  box-shadow: 0 0 24px rgba(232, 67, 61, .35);
+}
+
+.ability-key {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.ability-short {
+  font-size: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 960px) {
+  .agent-scene {
+    min-height: auto;
+  }
+
+  .agent-main {
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: auto;
+    padding: 120px 24px 40px;
+  }
+
+  .agent-info,
+  .ability-content {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .agent-detail-image {
+    object-position: 65% 20%;
+  }
+
+  .agent-scene::before {
+    background:
+      linear-gradient(180deg,
+        rgba(8, 10, 14, .55) 0%,
+        rgba(8, 10, 14, .92) 55%,
+        rgba(8, 10, 14, .98) 100%);
+  }
+
+  #agentName {
+    font-size: 54px;
+  }
+}
+
+@media (max-width: 600px) {
+  .ability-buttons {
+    flex-wrap: wrap;
+  }
+
+  .ability-button {
+    width: 68px;
+    height: 68px;
+  }
+}
+
+/* =========================================================
+   AGENT ROSTER PAGE — OPTION 5 STYLE
+   ========================================================= */
+
+.agent-roster-page {
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255, 70, 85, 0.10), transparent 22%),
+    radial-gradient(circle at 85% 15%, rgba(94, 234, 212, 0.06), transparent 20%),
+    linear-gradient(180deg, #071019 0%, #050b12 100%);
+  overflow-x: hidden;
+}
+
+
+/* HERO */
+
+.agent-roster-page .agents-hero {
+  position: relative;
+  padding: 56px 0 30px;
+  overflow: hidden;
+}
+
+.agent-roster-page .agents-hero-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.agent-roster-page .agents-hero-copy {
+  max-width: 700px;
+}
+
+.agent-roster-page .agents-kicker {
+  margin: 0 0 8px;
+  color: var(--signal);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+}
+
+.agent-roster-page .agents-title {
+  font-size: clamp(4rem, 9vw, 7rem);
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.agent-roster-page .agents-subtitle {
+  margin-top: 14px;
+  max-width: 450px;
+  color: var(--paper-dim);
+  font-size: 1rem;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+}
+
+.agent-roster-page .agents-hero-side {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 16px;
+  color: var(--paper-dim);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.agent-roster-page .agents-watermark {
+  position: absolute;
+  right: 3%;
+  top: 10px;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 16vw, 14rem);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.035);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.agent-roster-page section.tight {
+  padding-top: 20px;
+}
+
+
+/* GRID */
+
+.agent-roster-page .agents-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 24px;
+  counter-reset: agentCard;
+}
+
+
+/* CARD */
+
+.agent-roster-page .agent-card {
+  counter-increment: agentCard;
+  position: relative;
+  min-height: 670px;
+  padding: 0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  background:
+    linear-gradient(180deg, rgba(10, 18, 28, 0.40) 0%, rgba(7, 12, 20, 0.95) 68%, rgba(7, 12, 20, 1) 100%);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  isolation: isolate;
+  transition:
+    transform .35s ease,
+    box-shadow .35s ease,
+    border-color .35s ease;
+}
+
+.agent-roster-page .agent-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.42);
+}
+
+/* override hud pseudo corner */
+.agent-roster-page .agent-card::before {
+  content: counter(agentCard, decimal-leading-zero);
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: auto;
+  height: auto;
+  border: none;
+  opacity: 0.55;
+  color: rgba(236, 234, 228, 0.65);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  z-index: 3;
+}
+
+.agent-roster-page .agent-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  border: none;
+  opacity: 1;
+  background:
+    linear-gradient(180deg,
+      rgba(0, 0, 0, 0.02) 0%,
+      rgba(5, 9, 16, 0.15) 30%,
+      rgba(4, 8, 14, 0.74) 70%,
+      rgba(5, 8, 14, 0.98) 100%);
+  z-index: 1;
+}
+
+
+/* IMAGE */
+
+.agent-roster-page .agent-card .agent-avatar {
+  position: absolute;
+  inset: 0;
+  height: auto !important;
+  margin: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  display: block;
+  overflow: hidden;
+}
+
+.agent-roster-page .agent-card .agent-avatar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(0deg,
+      transparent 0 4px,
+      rgba(255, 255, 255, 0.03) 4px 5px);
+  opacity: .22;
+  pointer-events: none;
+}
+
+.agent-roster-page .agent-card .agent-avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  transform: scale(1.03);
+  transition: transform .45s ease;
+}
+
+.agent-roster-page .agent-card:hover .agent-avatar img {
+  transform: scale(1.08);
+}
+
+
+/* CONTENT */
+
+.agent-roster-page .agent-card>.badge,
+.agent-roster-page .agent-card>h3,
+.agent-roster-page .agent-card>p,
+.agent-roster-page .agent-card>.agent-cta {
+  position: relative;
+  z-index: 2;
+}
+
+.agent-roster-page .agent-card>.badge {
+  align-self: flex-start;
+  margin: 0 24px 14px;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-family: var(--font-display);
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.20);
+}
+
+.agent-roster-page .agent-card h3 {
+  margin: 0 24px 12px;
+  font-size: clamp(2.2rem, 3vw, 3.6rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--paper);
+}
+
+.agent-roster-page .agent-card p {
+  margin: 0 24px 20px;
+  max-width: none;
+  color: #d5d9df;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.agent-roster-page .agent-card .agent-cta {
+  margin: 0 24px 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  padding: 13px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(7, 12, 20, 0.65);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all .3s ease;
+}
+
+.agent-roster-page .agent-card:hover .agent-cta {
+  transform: translateX(4px);
+}
+
+
+/* ROLE COLORS */
+
+.agent-roster-page .agent-card.role-duelist {
+  --role-color: #ff5473;
+  --role-glow: rgba(169, 88, 255, 0.22);
+}
+
+.agent-roster-page .agent-card.role-sentinel {
+  --role-color: #af75ff;
+  --role-glow: rgba(175, 117, 255, 0.18);
+}
+
+.agent-roster-page .agent-card.role-controller {
+  --role-color: #16efb1;
+  --role-glow: rgba(22, 239, 177, 0.16);
+}
+
+.agent-roster-page .agent-card.role-initiator {
+  --role-color: #3ba2ff;
+  --role-glow: rgba(59, 162, 255, 0.18);
+}
+
+.agent-roster-page .agent-card.role-agent {
+  --role-color: #ffb54f;
+  --role-glow: rgba(255, 181, 79, 0.16);
+}
+
+.agent-roster-page .agent-card {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 0 32px var(--role-glow);
+}
+
+.agent-roster-page .agent-card>.badge {
+  color: var(--role-color);
+  border-color: var(--role-color);
+}
+
+.agent-roster-page .agent-card .agent-cta:hover,
+.agent-roster-page .agent-card:hover .agent-cta {
+  border-color: var(--role-color);
+  color: var(--role-color);
+}
+
+
+/* FEATURED FIRST CARD */
+
+.agent-roster-page .agent-card.featured {
+  box-shadow:
+    0 0 0 1px rgba(194, 130, 255, 0.70),
+    0 0 20px rgba(194, 130, 255, 0.35),
+    0 0 54px rgba(194, 130, 255, 0.20);
+  transform: translateY(-8px);
+}
+
+.agent-roster-page .agent-card.featured:hover {
+  transform: translateY(-12px);
+}
+
+.agent-roster-page .agent-card.featured .agent-cta {
+  background: linear-gradient(90deg, #ff5a63 0%, #ff6977 100%);
+  border-color: transparent;
+  color: #180705;
+  font-weight: 700;
+}
+
+.agent-roster-page .agent-card.featured:hover .agent-cta {
+  color: #180705;
+  transform: translateX(4px);
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1200px) {
+  .agent-roster-page .agents-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .agent-roster-page .agent-card {
+    min-height: 640px;
+  }
+}
+
+@media (max-width: 860px) {
+  .agent-roster-page .agents-hero-inner {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .agent-roster-page .agents-hero-side {
+    text-align: left;
+  }
+
+  .agent-roster-page .agents-watermark {
+    top: 40px;
+    right: -10px;
+  }
+
+  .agent-roster-page .agents-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .agent-roster-page .agent-card {
+    min-height: 620px;
+  }
+
+  .agent-roster-page .agent-card.featured {
+    transform: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .agent-roster-page .agent-card {
+    min-height: 560px;
+  }
+
+  .agent-roster-page .agent-card h3 {
+    font-size: 2.6rem;
+  }
+
+  .agent-roster-page .agent-card p {
+    font-size: 0.95rem;
+  }
+
+  .agent-roster-page .agent-card .agent-cta {
+    font-size: 0.85rem;
+    padding: 12px 14px;
+  }
+}
