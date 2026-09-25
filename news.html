@@ -12,17 +12,7 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
 <link rel="stylesheet" href="css/style.css">
-
-<style>
-  .hud-card-img {
-    width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 14px;
-    display: block;
-  }
-</style>
+<link rel="stylesheet" href="css/news.css">
 </head>
 <body>
 
@@ -40,12 +30,15 @@
   </div>
 </nav>
 
-<header class="container" style="padding: 64px 24px 40px;">
-  <span class="badge"><span class="dot"></span> Briefing</span>
+<header class="container" style="padding: 64px 24px 40px; position: relative; overflow: hidden;">
+  <span class="header-bg-text" aria-hidden="true">LATEST<br>UPDATE</span>
+  <span class="badge"><span class="dot pulse-dot"></span> Live Feed</span>
   <h1 style="margin-top:18px;">News &amp; Event</h1>
+  <p class="eyebrow-line">FRAG OR DIE — INTEL TERBARU DARI MEDAN TEMPUR</p>
   <p class="lede" style="margin-top:14px;">
-    Kumpulan update, event komunitas, dan sorotan kompetitif. Duplikat kartu di bawah
-    untuk tiap berita baru.
+    Dari patch terbaru, skin yang lagi hype, sampai panggung Esports dunia —
+    semua update VALORANT ngumpul di satu tempat. Klik tiap kartu buat baca
+    ceritanya lebih lengkap.
   </p>
 </header>
 
@@ -53,48 +46,126 @@
 <section class="tight">
   <div class="container">
     <div class="grid-3">
-      <article class="hud-card" data-aos="fade-up">
-        <img src="assets/news/champions-2026-bundle.png" alt="Champions 2026 Frag or Die Bundle" class="hud-card-img">
+      <a class="hud-card" data-aos="fade-up" href="detail-berita.html?id=0">
+        <div class="hud-card-img-wrap">
+          <img src="assets/news/champions-shanghai.png" alt="VALORANT Champions Shanghai 2026 Dimulai" class="hud-card-img" loading="lazy">
+        </div>
+        <span class="badge" style="margin-bottom:14px;">Esports</span>
+        <h3>VALORANT Champions Shanghai 2026 Dimulai</h3>
+        <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">24 September – 18 Oktober 2026</p>
+        <p>Turnamen dunia pertama VALORANT yang digelar di China ini mempertemukan 16 tim terbaik dunia memperebutkan gelar Champions terakhir di era franchise, dengan total hadiah $2.250.000.</p>
+        <span class="read-more">Baca selengkapnya &rarr;</span>
+      </a>
+      <a class="hud-card" data-aos="fade-up" data-aos-delay="80" href="detail-berita.html?id=1">
+        <div class="hud-card-img-wrap">
+          <img src="assets/news/console-anz.avif" alt="VALORANT Console Resmi Hadir di Australia &amp; New Zealand" class="hud-card-img" loading="lazy">
+        </div>
+        <span class="badge" style="margin-bottom:14px;">Announcement</span>
+        <h3>VALORANT Console Resmi Hadir di Australia &amp; New Zealand</h3>
+        <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">24 September 2026</p>
+        <p>Konsol ini akan diluncurkan pada 23 September di Australia dan Selandia Baru, baca selengkapnya di sini.</p>
+        <span class="read-more">Baca selengkapnya &rarr;</span>
+      </a>
+      <a class="hud-card" data-aos="fade-up" data-aos-delay="160" href="detail-berita.html?id=2">
+        <div class="hud-card-img-wrap">
+          <img src="assets/news/champions-2026-bundle.avif" alt="Champions 2026 — Frag or Die Bundle" class="hud-card-img" loading="lazy">
+        </div>
         <span class="badge" style="margin-bottom:14px;">Skin</span>
         <h3>Champions 2026 — "Frag or Die" Bundle</h3>
-        <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">22–23 September 2026</p>
-        <p>Bundle Phantom dan melee kipas lipat dengan tema hitam-emas-merah-putih. Untuk pertama kalinya, tampilan skin berubah tergantung sisi Attacker atau Defender yang dimainkan.</p>
-      </article>
-      <article class="hud-card" data-aos="fade-up" data-aos-delay="80">
-        <img src="assets/news/patch-13-06.webp" alt="Patch 13.06 — Rilis Warden" class="hud-card-img">
+        <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">23 September 2026</p>
+        <p>Saksikan pertandingan langsung dan dapatkan Drop eksklusif sambil menonton.</p>
+        <span class="read-more">Baca selengkapnya &rarr;</span>
+      </a>
+      <a class="hud-card" data-aos="fade-up" href="detail-berita.html?id=3">
+        <div class="hud-card-img-wrap">
+          <img src="assets/news/patch-13-06.avif" alt="Patch 13.06 — Rilis Warden" class="hud-card-img" loading="lazy">
+        </div>
         <span class="badge" style="margin-bottom:14px;">Patch Notes</span>
         <h3>Patch 13.06 — Rilis Warden</h3>
         <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">22 September 2026</p>
-        <p>Senjata rifle baru bernama Warden resmi hadir, setara Phantom dan Vandal namun lebih unggul di sudut tinggi — jadi alternatif baru selain Sniper.</p>
-      </article>
-      <article class="hud-card" data-aos="fade-up" data-aos-delay="160">
-        <img src="assets/news/champions-shanghai.avif" alt="Champions Shanghai 2026 Dimulai" class="hud-card-img">
-        <span class="badge" style="margin-bottom:14px;">Esports</span>
-        <h3>Champions Shanghai 2026 Dimulai</h3>
-        <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">24 September – 18 Oktober 2026</p>
-        <p>Turnamen dunia pertama VALORANT yang digelar di China ini mempertemukan tim-tim terbaik dunia, termasuk wajah baru seperti Karmine Corp.</p>
-      </article>
-      <article class="hud-card" data-aos="fade-up">
-        <img src="assets/news/gauntlet-glitched.webp" alt="Mode Baru: Gauntlet — Glitched" class="hud-card-img">
+        <p>Pembaruan besar VALORANT telah tiba.</p>
+        <span class="read-more">Baca selengkapnya &rarr;</span>
+      </a>
+      <a class="hud-card" data-aos="fade-up" data-aos-delay="160" href="detail-berita.html?id=5">
+        <div class="hud-card-img-wrap">
+          <img src="assets/news/champions-merch.avif" alt="Champions Shanghai — Merch Collection" class="hud-card-img" loading="lazy">
+        </div>
+        <span class="badge" style="margin-bottom:14px;">Community</span>
+        <h3>Champions Shanghai — Merch Collection</h3>
+        <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">17 September 2026</p>
+        <p>Rayakan Champions Shanghai dengan perilisan merchandise edisi terbatas. Dapatkan sebelum kehabisan.</p>
+        <span class="read-more">Baca selengkapnya &rarr;</span>
+      </a>
+       <a class="hud-card" data-aos="fade-up" data-aos-delay="160" href="detail-berita.html?id=8">
+        <div class="hud-card-img-wrap">
+          <img src="assets/news/if-sun-burns-out.png" alt="If The Sun Burns Out Tonight — Anthem Champions 2026"  class="hud-card-img" loading="lazy">
+        </div>
+        <span class="badge" style="margin-bottom:14px;">Announcement</span>
+        <h3>If The Sun Burns Out Tonight</h3>
+        <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">16 September 2026</p>
+        <p>Lima skin baru (Vandal, Bandit, Guardian, Marshal, dan melee eksklusif) tampil dengan tema fantasi kartu ajaib bergaya anime, lengkap dengan easter egg Riftbound.</p>
+        <span class="read-more">Baca selengkapnya &rarr;</span>
+      </a>
+          <a class="hud-card" data-aos="fade-up" data-aos-delay="80" href="detail-berita.html?id=4">
+        <div class="hud-card-img-wrap">
+          <img src="assets/news/gautlet.png" alt="Mode Baru: Gauntlet — Glitched" class="hud-card-img" loading="lazy">
+        </div>
         <span class="badge" style="margin-bottom:14px;">Event</span>
         <h3>Mode Baru: Gauntlet — Glitched</h3>
-        <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">22 September 2026</p>
-        <p>Mode permainan baru yang dirilis bersamaan dengan Patch 13.06, membawa nuansa berbeda dari mode kompetitif standar.</p>
-      </article>
-      <article class="hud-card" data-aos="fade-up" data-aos-delay="80">
-        <img src="assets/news/run-it-back.webp" alt="Run It Back V26 Bundle" class="hud-card-img">
+        <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">14 September 2026</p>
+        <p>16 pemain, 8 tim, kekacauan murni. Bangun Agen sempurna Anda, tingkatkan Kemampuan, dan raih tempat Anda di lingkaran pemenang dalam mode permainan paling ambisius yang pernah dibuat VALORANT.</p>
+        <span class="read-more">Baca selengkapnya &rarr;</span>
+      </a>
+      <a class="hud-card" data-aos="fade-up" href="detail-berita.html?id=9">
+        <div class="hud-card-img-wrap">
+          <img src="assets/news/pickems.avif" alt="Pick'Ems Champions Sudah Dibuka" class="hud-card-img" loading="lazy">
+        </div>
+        <span class="badge" style="margin-bottom:14px;">Community</span>
+        <h3>Pick'Ems Champions Sudah Dibuka</h3>
+        <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">11 September 2026</p>
+        <p>Pick'Ems akan dimulai pada 10 September di situs web dan di aplikasi. Tetapkan pilihan Anda dan bersiaplah untuk Champions Shanghai!.</p>
+        <span class="read-more">Baca selengkapnya &rarr;</span>
+      </a>
+       <a class="hud-card" data-aos="fade-up" data-aos-delay="80" href="detail-berita.html?id=7">
+        <div class="hud-card-img-wrap">
+          <img src="assets/news/vct-2027-oq.avif" alt="Get Ready for VCT 2027 Open Qualifiers" class="hud-card-img" loading="lazy">
+        </div>
+        <span class="badge" style="margin-bottom:14px;">Esports</span>
+        <h3>Get Ready for VCT 2027 Open Qualifiers</h3>
+        <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">8 September 2026</p>
+        <p>Riot membuka era baru VCT: mulai musim 2027, tim non-partner bisa lolos langsung ke Kickoff, Cups, Masters, bahkan Champions lewat jalur Open Qualifiers.</p>
+        <span class="read-more">Baca selengkapnya &rarr;</span>
+      </a>
+      <a class="hud-card" data-aos="fade-up" data-aos-delay="80" href="detail-berita.html?id=10">
+        <div class="hud-card-img-wrap">
+          <img src="assets/news/run-it-back.webp" alt="Run It Back V26 Bundle" class="hud-card-img" loading="lazy">
+        </div>
         <span class="badge" style="margin-bottom:14px;">Skin</span>
         <h3>Run It Back V26 Bundle</h3>
         <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">2 September 2026</p>
         <p>Tiga skin legendaris comeback: Elderflame Operator, RGX 11Z Pro Vandal, dan Singularity Sheriff — tersedia dengan diskon 20%.</p>
-      </article>
-      <article class="hud-card" data-aos="fade-up" data-aos-delay="160">
-        <img src="assets/news/pickems.avif" alt="Pick'Ems Champions Sudah Dibuka" class="hud-card-img">
-        <span class="badge" style="margin-bottom:14px;">Community</span>
-        <h3>Pick'Ems Champions Sudah Dibuka</h3>
-        <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">10 September 2026</p>
-        <p>Pasang prediksimu untuk VALORANT Champions Shanghai langsung dari website maupun client game, dan rebut hadiah eksklusif.</p>
-      </article>
+        <span class="read-more">Baca selengkapnya &rarr;</span>
+      </a>
+       <a class="hud-card" data-aos="fade-up" href="detail-berita.html?id=6">
+        <div class="hud-card-img-wrap">
+          <img src="assets/news/gc-pacific.avif" alt="Panduan VALORANT Game Changers Pacific 2026" class="hud-card-img" loading="lazy">
+        </div>
+        <span class="badge" style="margin-bottom:14px;">Esports</span>
+        <h3>Panduan VALORANT Game Changers Pacific 2026</h3>
+        <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">24 Agustus 2026</p>
+        <p>Tim-tim terbaik Game Changers Pacific kembali untuk berkompetisi lagi! Cari tahu selengkapnya di sini!!</p>
+        <span class="read-more">Baca selengkapnya &rarr;</span>
+      </a>
+      <a class="hud-card" data-aos="fade-up" data-aos-delay="160" href="detail-berita.html?id=11">
+        <div class="hud-card-img-wrap">
+          <img src="assets/news/aeris-bundle.png" alt="Koleksi Aeris — Skin Ultra Bertema Kartu Ajaib" class="hud-card-img" loading="lazy">
+        </div>
+        <span class="badge" style="margin-bottom:14px;">Skin</span>
+        <h3>Koleksi Aeris — Skin Ultra Bertema Kartu Ajaib</h3>
+        <p style="font-size:.85rem; color:var(--cyan); margin-bottom:8px;">17 Agustus 2026</p>
+        <p>Lima skin baru (Vandal, Bandit, Guardian, Marshal, dan melee eksklusif) tampil dengan tema fantasi kartu ajaib bergaya anime, lengkap dengan easter egg Riftbound.</p>
+        <span class="read-more">Baca selengkapnya &rarr;</span>
+      </a>
     </div>
   </div>
 </section>
@@ -121,5 +192,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script src="js/main.js"></script>
+
+
 </body>
 </html>
