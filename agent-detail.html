@@ -1,0 +1,2266 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Agent Detail — UNSCOPED</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        .back-agent {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #c8cdd6;
+            text-decoration: none;
+            font-family: "Chakra Petch", sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: 0.25s ease;
+        }
+
+        .back-agent:hover {
+            color: #ff4655;
+            transform: translateX(-4px);
+        }
+
+        body {
+            background: #060a10;
+            overflow-x: hidden;
+        }
+
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(4, 8, 14, 0.84);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .agent-detail {
+            width: 100%;
+            max-width: none;
+            min-height: calc(100vh - 74px);
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .agent-scene {
+            position: relative;
+            width: 100vw;
+            min-height: calc(100vh - 74px);
+            margin-left: calc(50% - 50vw);
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 78% 28%, rgba(84, 93, 255, 0.16), transparent 22%),
+                radial-gradient(circle at 18% 16%, rgba(255, 70, 85, 0.08), transparent 16%),
+                linear-gradient(180deg, #05080d 0%, #070b12 100%);
+        }
+
+        .agent-scene-media {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .agent-bg-image {
+            position: absolute;
+            inset: -10%;
+            width: 120%;
+            height: 120%;
+            object-fit: cover;
+            object-position: 65% center;
+            filter: blur(20px) brightness(0.42) saturate(1.12);
+            transform: scale(1.18);
+            opacity: 0.92;
+        }
+
+        .agent-scene-media::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg,
+                    rgba(4, 8, 14, 0.98) 0%,
+                    rgba(4, 8, 14, 0.95) 18%,
+                    rgba(4, 8, 14, 0.68) 37%,
+                    rgba(4, 8, 14, 0.16) 62%,
+                    rgba(4, 8, 14, 0.32) 100%),
+                linear-gradient(180deg,
+                    rgba(4, 8, 14, 0.10) 0%,
+                    rgba(4, 8, 14, 0.02) 52%,
+                    rgba(4, 8, 14, 0.35) 100%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .agent-scene-media::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 82% 30%, rgba(125, 98, 255, 0.22), transparent 18%),
+                radial-gradient(circle at 72% 74%, rgba(48, 88, 255, 0.16), transparent 20%),
+                radial-gradient(circle at 92% 84%, rgba(255, 70, 85, 0.10), transparent 18%);
+            z-index: 1;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+
+        .agent-detail-image {
+            position: absolute;
+            right: clamp(-30px, -1vw, 0px);
+            bottom: 0;
+            width: min(60vw, 1040px);
+            height: 100%;
+            object-fit: contain;
+            object-position: right bottom;
+            z-index: 2;
+            filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.45));
+            transform: scale(1.03);
+        }
+
+        .agent-main {
+            position: relative;
+            z-index: 3;
+            min-height: calc(100vh - 74px);
+            padding-bottom: 150px;
+        }
+
+        .agent-info {
+            position: absolute;
+            left: clamp(42px, 6vw, 88px);
+            top: clamp(82px, 13vh, 132px);
+            width: min(31vw, 500px);
+            z-index: 4;
+        }
+
+        .agent-info .back-agent {
+            margin-bottom: 42px;
+        }
+
+        .agent-info .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 16px;
+            border: 1px solid #ff4655;
+            color: #ff4655;
+            background: rgba(255, 70, 85, 0.03);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .agent-line {
+            width: 80px;
+            height: 3px;
+            background: #ff4655;
+            margin: 28px 0 28px;
+        }
+
+        #agentName {
+            font-family: "Chakra Petch", sans-serif;
+            font-size: clamp(86px, 8.4vw, 150px);
+            line-height: 0.86;
+            letter-spacing: -4px;
+            margin: 0 0 28px;
+            text-transform: uppercase;
+            color: #f2efe9;
+            word-break: break-word;
+        }
+
+        #agentDescription {
+            max-width: 430px;
+            color: rgba(236, 234, 228, 0.86);
+            font-size: clamp(15px, 1.2vw, 18px);
+            line-height: 1.78;
+            margin: 0;
+        }
+
+        .ability-buttons {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            gap: 16px;
+            margin-top: 38px;
+            flex-wrap: nowrap;
+        }
+
+        .ability-button {
+            width: 92px;
+            height: 108px;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            background: rgba(8, 12, 18, 0.72);
+            color: #d7dce1;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: "Chakra Petch", sans-serif;
+            transition: 0.22s ease;
+            clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
+
+        .ability-button:hover {
+            border-color: #ff4655;
+            transform: translateY(-2px);
+        }
+
+        .ability-button.active {
+            background: linear-gradient(180deg, rgba(255, 86, 98, 0.98), rgba(207, 49, 58, 0.95));
+            color: #fff;
+            border-color: #ff4655;
+            box-shadow: 0 0 30px rgba(255, 70, 85, 0.28);
+        }
+
+        .ability-key {
+            font-size: 42px;
+            line-height: 1;
+            font-weight: 700;
+        }
+
+        .ability-short {
+            font-size: 12px;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            opacity: 0.92;
+        }
+
+        .ability-content {
+            position: absolute;
+            right: clamp(18px, 2.6vw, 42px);
+            top: clamp(102px, 12vh, 142px);
+            z-index: 5;
+            width: min(27vw, 430px);
+            min-height: 520px;
+            padding: 24px 24px 22px;
+            background: rgba(8, 12, 18, 0.84);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-left: 4px solid #ff4655;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 22px), calc(100% - 26px) 100%, 0 100%, 0 18px);
+            box-shadow: 0 28px 70px rgba(0, 0, 0, 0.40);
+        }
+
+        .ability-content::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            clip-path: inherit;
+            pointer-events: none;
+        }
+
+        .ability-visual {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, rgba(255, 70, 85, 0.08), rgba(95, 100, 255, 0.08));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 28px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ability-visual img {
+            max-width: 68%;
+            max-height: 68%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .ability-placeholder {
+            text-align: center;
+            color: #969da6;
+        }
+
+        .ability-placeholder-key {
+            font-family: "Chakra Petch", sans-serif;
+            font-size: 86px;
+            line-height: 1;
+            font-weight: 700;
+            color: rgba(255, 70, 85, 0.78);
+        }
+
+        .ability-placeholder-text {
+            margin-top: 10px;
+            font-size: 12px;
+            letter-spacing: 3px;
+            color: #7b838e;
+        }
+
+        .ability-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .ability-key-label {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ff4655;
+            color: #fff;
+            font-family: "Chakra Petch", sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .ability-type {
+            color: rgba(236, 234, 228, 0.56);
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        #abilityName {
+            font-family: "Chakra Petch", sans-serif;
+            font-size: clamp(30px, 2.5vw, 50px);
+            line-height: 0.94;
+            margin: 0 0 18px;
+            text-transform: uppercase;
+            color: #f2efe9;
+        }
+
+        #abilityDescription {
+            color: rgba(236, 234, 228, 0.82);
+            font-size: 15px;
+            line-height: 1.68;
+            margin: 0;
+            max-width: 100%;
+        }
+
+        footer {
+            margin-top: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            background: #0a0f15;
+        }
+
+        @media (max-width: 1280px) {
+            .agent-info {
+                width: min(31vw, 430px);
+            }
+
+            .ability-content {
+                width: min(30vw, 400px);
+                min-height: 500px;
+            }
+
+            .ability-button {
+                width: 86px;
+                height: 102px;
+            }
+        }
+
+        @media (max-width: 980px) {
+            .agent-scene {
+                min-height: auto;
+            }
+
+            .agent-main {
+                min-height: auto;
+                padding: 110px 20px 34px;
+            }
+
+            .agent-bg-image {
+                inset: -8%;
+                width: 116%;
+                height: 116%;
+                object-position: center;
+                filter: blur(16px) brightness(0.40) saturate(1.08);
+            }
+
+            .agent-detail-image {
+                right: 50%;
+                transform: translateX(50%);
+                width: min(92vw, 740px);
+                height: 430px;
+                top: 30px;
+                bottom: auto;
+                object-position: center top;
+                opacity: 0.78;
+            }
+
+            .agent-scene-media::before {
+                background: linear-gradient(180deg,
+                    rgba(4, 8, 14, 0.38) 0%,
+                    rgba(4, 8, 14, 0.85) 44%,
+                    rgba(4, 8, 14, 0.97) 100%);
+            }
+
+            .agent-info,
+            .ability-buttons,
+            .ability-content {
+                position: relative;
+                left: auto;
+                right: auto;
+                top: auto;
+                bottom: auto;
+                width: 100%;
+                max-width: none;
+            }
+
+            .agent-info {
+                padding-top: 270px;
+            }
+
+            .agent-info .back-agent {
+                margin-bottom: 24px;
+            }
+
+            #agentName {
+                font-size: 62px;
+                margin-bottom: 18px;
+            }
+
+            #agentDescription {
+                max-width: 100%;
+            }
+
+            .ability-buttons {
+                margin: 30px 0 28px;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .ability-button {
+                width: calc(50% - 6px);
+                max-width: 150px;
+                height: 94px;
+            }
+
+            .ability-content {
+                min-height: auto;
+                padding: 24px;
+            }
+
+            .ability-visual {
+                height: 220px;
+            }
+
+            #abilityDescription {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .nav-inner {
+                padding: 12px 16px;
+            }
+
+            .agent-main {
+                padding: 88px 16px 24px;
+            }
+
+            .agent-detail-image {
+                width: min(110vw, 660px);
+                height: 330px;
+                top: 24px;
+            }
+
+            .agent-info {
+                padding-top: 210px;
+            }
+
+            #agentName {
+                font-size: 52px;
+                letter-spacing: -2px;
+            }
+
+            .ability-button {
+                width: calc(50% - 6px);
+                height: 84px;
+            }
+
+            .ability-key {
+                font-size: 34px;
+            }
+
+            .ability-short {
+                font-size: 10px;
+            }
+
+            .ability-content {
+                padding: 18px;
+            }
+
+            .ability-visual {
+                height: 188px;
+                margin-bottom: 18px;
+            }
+
+            #abilityName {
+                font-size: 34px;
+            }
+        }
+
+/* FINAL VALORANT DASHBOARD POSITION FIX */
+.agent-scene{
+    height:auto;
+    min-height:max(calc(100vh - 74px), 860px);
+}
+
+.agent-scene-media{
+    inset:0;
+}
+
+/* full artwork background */
+.agent-bg-image{
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    filter:blur(0px) brightness(.55) saturate(1.15);
+    transform:scale(1.05);
+    opacity:1;
+}
+
+/* transparent agent artwork */
+.agent-detail-image{
+    position:absolute;
+    left:50%;
+    bottom:-80px;
+    right:auto;
+    width:min(62vw,980px);
+    height:115%;
+    object-fit:contain;
+    object-position:center bottom;
+    transform:translateX(-42%);
+    z-index:2;
+}
+
+/* dark left area like official VAL page */
+.agent-scene-media::before{
+    background:
+    linear-gradient(90deg,
+        rgba(4,7,12,.98) 0%,
+        rgba(4,7,12,.90) 25%,
+        rgba(4,7,12,.35) 48%,
+        rgba(4,7,12,.15) 70%,
+        rgba(4,7,12,.45) 100%),
+    linear-gradient(0deg,
+        rgba(4,7,12,.5),
+        transparent 45%);
+}
+
+/* left information */
+.agent-info{
+    left:82px;
+    top:82px;
+    width:min(36vw, 560px);
+}
+
+#agentName{
+    font-size:clamp(74px, 7vw, 118px);
+    letter-spacing:-4px;
+    line-height:.9;
+    white-space:nowrap;
+    word-break:keep-all;
+    overflow-wrap:normal;
+    margin-bottom:20px;
+}
+
+#agentDescription{
+    max-width:520px;
+}
+
+/* ability card */
+.ability-content{
+    right:56px;
+    top:86px;
+    width:400px;
+    min-height:480px;
+    padding:20px 20px 18px;
+    background:rgba(7,10,16,.78);
+}
+
+.ability-visual{
+    height:205px;
+    margin-bottom:22px;
+}
+
+#abilityName{
+    font-size:48px;
+    margin-bottom:16px;
+}
+
+#abilityDescription{
+    font-size:14px;
+    line-height:1.62;
+}
+
+/* ability buttons */
+.ability-buttons{
+    position:relative;
+    left:0;
+    bottom:auto;
+    margin-top:34px;
+    gap:18px;
+    margin-bottom:16px;
+}
+
+.ability-button{
+    width:98px;
+    height:108px;
+}
+
+/* remove extra black feeling */
+.agent-detail{
+    background:transparent;
+}
+
+@media (max-width: 1280px){
+    .agent-info{ width:min(40vw, 520px); }
+    #agentName{ font-size:clamp(64px, 6.2vw, 102px); }
+    .ability-content{ width:360px; right:34px; }
+    .ability-button{ width:90px; height:102px; }
+}
+
+@media (max-width: 980px){
+    .agent-main{ padding-bottom:34px; }
+    #agentName{ white-space:normal; }
+}
+</style>
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         NAVBAR
+    ===================================================== -->
+
+    <nav class="nav">
+        <div class="nav-inner">
+
+            <a href="index.html" class="nav-mark">
+                <span class="dot"></span> UNSCOPED
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="character.html" aria-current="page">Agent</a></li>
+                <li><a href="gameplay.html">Gameplay</a></li>
+                <li><a href="news.html">News</a></li>
+                <li><a href="download.html">Play Now</a></li>
+            </ul>
+
+        </div>
+    </nav>
+
+
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
+    <main class="agent-detail">
+
+        <div class="agent-scene">
+
+            <!-- GAMBAR AGENT — MENYATU DI BELAKANG HERO + ABILITY -->
+            <div class="agent-scene-media">
+                <img id="agentImageBg" class="agent-bg-image" src="" alt="" aria-hidden="true">
+                <img id="agentImage" class="agent-detail-image" src="" alt="Agent">
+            </div>
+
+            <section class="agent-main">
+
+                <div class="agent-info">
+
+                    <a href="character.html" class="back-agent">
+                        ← BACK TO AGENTS
+                    </a>
+
+                    <span id="agentRole" class="badge">
+                        ROLE
+                    </span>
+
+                    <div class="agent-line"></div>
+
+                    <h1 id="agentName">
+                        AGENT
+                    </h1>
+
+                    <p id="agentDescription">
+                        Memuat informasi Agent...
+                    </p>
+
+                    <!-- =========================================
+                         ABILITY BUTTONS (Q / E / C / X)
+                    ========================================= -->
+                    <div id="abilityButtons" class="ability-buttons">
+                    </div>
+
+                </div>
+
+                <!-- =============================================
+                     ABILITY DETAIL — KARTU KACA MENGAMBANG
+                ============================================= -->
+                <div class="ability-content">
+
+                    <div id="abilityVisual" class="ability-visual">
+                    </div>
+
+                    <div class="ability-meta">
+
+                        <div id="abilityKeyLabel" class="ability-key-label">
+                            Q
+                        </div>
+
+                        <span class="ability-type">
+                            SPECIAL ABILITY
+                        </span>
+
+                    </div>
+
+                    <h3 id="abilityName">
+                        ABILITY
+                    </h3>
+
+                    <p id="abilityDescription">
+                        Pilih kemampuan untuk melihat detail.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+
+    <footer>
+
+        <div class="container">
+
+            <div class="disclaimer">
+                <strong>UNSCOPED</strong>
+                was created under Riot Games' "Legal Jibber Jabber" policy
+                using assets owned by Riot Games. Riot Games does not
+                endorse or sponsor this project.
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+        /* =====================================================
+           AGENT DATABASE
+        ===================================================== */
+
+        const agents = {
+
+            "Waylay": {
+                role: "Duelist",
+                image: "assets/agents/waylay.avif",
+                description:
+                    "Waylay, agen Thailand yang berpijar prismatik, berubah menjadi cahaya saat ia melesat melintasi medan tempur. Ia menyerang targetnya melalui secercah cahaya dan langsung mengamankan diri dalam sekejap mata."
+            },
+
+            "Vyse": {
+                role: "Sentinel",
+                image: "assets/agents/vyse.avif",
+                description:
+                    "Mastermind metalik Vyse mengeluarkan logam cair untuk mengisolasi, menjebak, dan melucuti senjata musuh. Dengan kelicikan dan manipulasi, dia memaksa semua yang menentangnya untuk takut pada battlefield."
+            },
+
+            "Viper": {
+                role: "Controller",
+                image: "assets/agents/viper.avif",
+                description:
+                    "Seorang Ahli Kimia dari Amerika, Viper, mengerahkan sejumlah perangkat kimia beracun untuk mengendalikan battlefield dan menghalangi pandangan musuh. Jika racun tak membunuh buruannya, permainan pikirannya pasti menghabisi mereka."
+            },
+
+            "Veto": {
+                role: "Sentinel",
+                image: "assets/agents/veto.avif",
+                description:
+                    "Diperkuat mutasi DNA yang tak terbendung, enforcer asal Senegal, Veto, menabrak aturan tempur dengan melumpuhkan kekuatan dan teknologi lawannya. Di medan tempur Veto, tembakan adalah satu-satunya peganganmu."
+            },
+
+            "Tejo": {
+                role: "Initiator",
+                image: "assets/agents/tejo.avif",
+                description:
+                    "seorang konsultan intelijen veteran dari Kolombia, Tejo, bersama sistem pemandu balistiknya menekan musuh untuk menyerahkan wilayah mereka—atau nyawa. Serangannya yang terarah terus membuat lawan kocar-kacir dan berada di bawah kendalinya.."
+            },
+
+            "Sova": {
+                role: "Initiator",
+                image: "assets/agents/sova.avif",
+                description:
+                    "Terlahir dari musim dingin abadi tundra Rusia, Sova melacak, menemukan, dan menghabisi musuh dengan efisiensi dan presisi dahsyat. Busur khusus dan kemampuan pengintaian luar biasanya memastikan bahwa kamu bisa lari, tetapi tak bisa sembunyi.."
+            },
+
+            "Skye": {
+                role: "Initiator",
+                image: "assets/agents/skye.avif",
+                description:
+                    "Berasal dari Australia, Skye dan teman-temannya menjelajahi wilayah-wilayah berbahaya. Dengan kreasi yang menghambat gerak musuh, dan kekuatannya untuk menyembuhkan orang lain, tempat paling aman dan kuat bagi para anggota timnya adalah di sisinya."
+            },
+
+            "Sage": {
+                role: "Sentinel",
+                image: "assets/agents/sage.avif",
+                description:
+                    "Benteng pertahanan dari Tiongkok, Sage memberikan rasa aman bagi dirinya dan timnya ke mana pun dia pergi. Bisa membangkitkan teman yang gugur dan menahan gempuran sengit, dia menjadi sumber ketenangan dalam medan perang bagai neraka."
+            },
+
+            "Reyna": {
+                role: "Duelist",
+                image: "assets/agents/reyna.avif",
+                description:
+                    "Tertempa di jantung Meksiko, Reyna mendominasi kombat tunggal dan menjadi makin kuat tiap berhasil membunuh. Kepiawaiannya hanya terhambat oleh keahlian mentahnya, membuatnya sangat bergantung pada performa.."
+            },
+
+            "Raze": {
+                role: "Duelist",
+                image: "assets/agents/raze.avif",
+                description:
+                    "Raze, si eksplosif dari Brasil ini membawa kepribadian yang keras serta senjata besarnya. Dengan playstyle-nya yang brutal, Raze unggul dalam menyapu musuh yang berdiam dan mengosongkan ruang sempit dengan ledakan besar."
+            },
+
+            "Phoenix": {
+                role: "Duelist",
+                image: "assets/agents/phoenix.avif",
+                description:
+                    "Berasal dari Britania Raya, kekuatan bintang Phoenix terpampang dalam gaya bertarungnya, mengobarkan medan perang dengan kilat dan api. Saat sendiri maupun dibantu rekannya, dia akan menerjang ke pertarungan sesuka hatinya."
+            },
+
+            "Jett": {
+                role: "Duelist",
+                image: "assets/agents/jett.avif",
+                description:
+                    "Mewakili negara asalnya, Korea Selatan, gaya bertarung Jett yang tangkas dengan banyak pengelakan memungkinkannya mengambil risiko yang tak bisa dilakukan orang lain. Dia mengitari tiap pertempuran, menebas musuh sebelum mereka menyadari apa yang terjadi."
+            },
+
+            "Iso": {
+                role: "Duelist",
+                image: "assets/agents/iso.avif",
+                description:
+                    "Agen andalan dari Cina, Iso, memasuki kondisi fokus untuk memberantas lawan. Dengan merombak energi sekitar menjadi proteksi antipeluru, dia fokus maju ke duel selanjutnya hingga titik darah penghabisan."
+            },
+
+            "Harbor": {
+                role: "Controller",
+                image: "assets/agents/harbor.avif",
+                description:
+                    "Berasal dari pesisir India, Harbor menyerbu medan pertempuran dengan menggunakan teknologi kuno yang menguasai air. Dia mengeluarkan arus deras berbuih dan ombak yang menghancurkan untuk melindungi sekutu, atau menghancurkan siapa pun yang menentangnya."
+            },
+
+            "Gekko": {
+                role: "Initiator",
+                image: "assets/agents/gekko.avif",
+                description:
+                    "Gekko the Angeleno memimpin kru kompak yang berisi makhluk pembawa malapetaka. Rekan-rekannya bergerak maju, menyingkirkan musuh, dan Gekko mengejar mereka untuk bersatu kembali dan pergi lagi."
+            },
+
+            "Fade": {
+                role: "Initiator",
+                image: "assets/agents/fade.avif",
+                description:
+                    "Pemburu bayaran asal Turki, Fade, melepaskan kekuatan mimpi buruk kejam untuk merebut rahasia musuh. Sesuai dengan teror itu sendiri, dia memburu target dan menyingkap ketakutan terdalam — sebelum menghancurkan mereka dalam kegelapan."
+            },
+
+            "Deadlock": {
+                role: "Sentinel",
+                image: "assets/agents/deadlock.avif",
+                description:
+                    "Detektif Norwegia, Deadlock, mengerahkan serangkaian nanowire mutakhir untuk mengamankan medan perang dari serangan yang paling mematikan sekalipun. Tak ada yang bisa lolos dari pengawasan ketatnya, ataupun bertahan dari kebengisannya.."
+            },
+
+            "Cypher": {
+                role: "Sentinel",
+                image: "assets/agents/cypher.avif",
+                description:
+                    "Seorang makelar informasi dari Maroko, Cypher adalah jaringan pengintai satu orang yang mengawasi tiap gerakan musuh. Tak ada rahasia yang aman. Tak ada manuver yang tak terlihat. Cypher selalu mengawasi."
+            },
+
+            "Clove": {
+                role: "Controller",
+                image: "assets/agents/clove.avif",
+                description:
+                    "Pembuat onar dari Skotlandia, Clove, membawa masalah bagi musuh dalam panasnya pertempuran dan dinginnya kematian. Manusia abadi ini membuat musuhnya kebingungan, bahkan dari alam kubur. Dia kembali ke dunia hanya tinggal menunggu waktu."
+            },
+
+            "Chamber": {
+                role: "Sentinel",
+                image: "assets/agents/chamber.avif",
+                description:
+                    "Berpakaian rapi dan bersenjata lengkap, desainer senjata dari Prancis, Chamber, menghalau penyerang dengan presisi yang mematikan. Dia memanfaatkan persenjataan kustomnya untuk mempertahankan area tertentu, menembak musuh dari jauh, dengan kontingensi yang tersusun untuk tiap rencana."
+            },
+
+            "Brimstone": {
+                role: "Controller",
+                image: "assets/agents/brimstone.avif",
+                description:
+                    "Bergabung dari AS, persenjataan orbital Brimstone memastikan squad-nya selalu di posisi menguntungkan. Kemampuannya untuk melancarkan bantuan secara presisi dan aman menjadikannya seorang komandan tempur tak tertandingi."
+            },
+
+            "Astra": {
+                role: "Controller",
+                image: "assets/agents/astra.avif",
+                description:
+                    "Agen asal Ghana, Astra, memberdayakan kekuatan semesta untuk mereka ulang medan tempur sesuka hatinya. Dengan kendali penuh atas wujud astralnya dan bakat meramal strategisnya, dia akan selalu unggul dari musuuhnya."
+            },
+
+            "Yoru": {
+                role: "Duelist",
+                image: "assets/agents/yoru.avif",
+                description:
+                    "Agen asal Jepang Yoru melubangi realitas untuk menyusup ke wilayah musuh tanpa terlihat. Dengan bermodal tipuan dan agresi yang seimbang, dia menghabisi tiap target sebelum mereka sadar ke mana harus melihat."
+            },
+
+            "Omen": {
+                role: "Controller",
+                image: "assets/agents/omen.avif",
+                description:
+                    "Sesosok hantu dalam pikiran, Omen berburu di dalam bayangan. Dia membutakan musuh, berteleportasi di penjuru medan tempur, lalu membiarkan rasa paranoid menghantui selagi musuh berusaha menerka di mana dia akan menyerang berikutnya."
+            },
+
+            "Neon": {
+                role: "Duelist",
+                image: "assets/agents/neon.avif",
+                description:
+                    "Agen dari Filipina, Neon, melesat maju dengan kecepatan yang mencengangkan, menyemburkan pancaran bioelektrik secepat tubuhnya menghasilkannya. Dia berlari untuk mengejutkan musuh, lalu menyerang mereka lebih cepat dari kilat."
+            },
+
+            "Killjoy": {
+                role: "Sentinel",
+                image: "assets/agents/killjoy.avif",
+                description:
+                    "Sang genius dari Jerman, Killjoy, dengan mudah mengamankan posisi penting medan perang dengan segudang penemuannya. Jika kerusakan yang dihasilkan tak menghentikan musuh, debuff robot-robotnya akan mengatasinya."
+            },
+
+            "KAY/O": {
+                role: "Initiator",
+                image: "assets/agents/kay.o.avif",
+                description:
+                    "KAY/O adalah mesin perang yang diciptakan demi satu tujuan: melumpuhkan para radiant. Kekuatannya dalam Suppress ability musuh melucuti kemampuan mereka untuk melawan balik, memberikan keunggulan besar bagi dirinya dan sekutunya."
+            },
+
+            "Miks": {
+                role: "Controller",
+                image: "assets/agents/miks.avif",
+                description:
+                    "Straight from Croatia, Miks takes the stage channeling pure sound energy. With his infectious passion and sonic powers, he rallies his squad to move as one as they set the tempo on the battlefield together."
+            },
+
+            "Brance": {
+                role: "Agent",
+                image: "assets/agents/brance.avif",
+                description:
+                    "Breach, the bionic Swede, fires powerful, targeted kinetic blasts to aggressively clear a path through enemy ground. The damage and disruption he inflicts ensures no fight is ever fair."
+            }
+
+        };
+
+
+        /* =====================================================
+           ABILITY DATABASE
+           
+           PENTING:
+           GAMBAR TIDAK PERLU DITULIS DI SINI.
+
+           Sistem otomatis mencari:
+
+           agent-q.avif
+           agent-e.avif
+           agent-c.avif
+           agent-x.avif
+
+           Contoh:
+
+           tejo-q.avif
+           tejo-e.avif
+           tejo-c.avif
+           tejo-x.avif
+        ===================================================== */
+
+        const abilities = {
+
+            "Astra": [
+                {
+                    key: "Q",
+                    name: "NOVA PULSE",
+                    type: "Ability",
+                    description: "Tempatkan Star dalam Astral Form. ACTIVATE satu Star untuk meledakkan Nova Pulse. Nova Pulse akan charge sejenak, lalu menyerang, mengguncang semua pemain di area tersebut."
+                },
+                {
+                    key: "E",
+                    name: "NEBULA",
+                    type: "Signature",
+                    description: "Tempatkan Star dalam Astral Form. ACTIVATE satu Star untuk mengubahnya menjadi Nebula (asap). USE satu Star untuk Melenyapkannya, mengembalikan Star tersebut agar bisa ditempatkan di lokasi baru setelah beberapa saat. Lenyap membentuk Nebula palsu sejenak di lokasi Star sebelum kembali."
+                },
+                {
+                    key: "C",
+                    name: "GRAVITY WELL",
+                    type: "Ability",
+                    description: "Tempatkan Star dalam Astral Form (X) ACTIVATE satu Star untuk membentuk Gravity Well. Pemain di area tersebut tersedot ke pusatnya sebelum liang meledak, membuat semua pemain yang masih terjebak di dalamnya menjadi Vulnerable."
+                },
+                {
+                    key: "X",
+                    name: "ASTRAL FORM / COSMIC DIVIDE",
+                    type: "Ultimate",
+                    description: "AKTIFKAN untuk memasuki Astral Form yang memungkinkanmu menempatkan Star dengan TEMBAK. Star bisa diaktifkan ulang belakangan, mengubahnya menjadi Nova Pulse, Nebula, atau Gravity Well. Saat Cosmic Divide di-charge, gunakan TEMBAK ALT dalam Astral Form untuk mulai membidiknya, lalu TEMBAK untuk memilih dua lokasi. Cosmic Divide tanpa batas menghubungkan dua titik pilihanmu. Cosmic Divide menangkis peluru dan sangat meredam suara."
+                }
+            ],
+
+            "Waylay": [
+                {
+                    key: "Q",
+                    name: "SATURATE",
+                    type: "Ability",
+                    description: "SEKETIKA melemparkan sekumpulan cahaya yang meledak saat menyentuh tanah. Cahaya lalu menerapkan Hinder ke pemain di sekitar, memperlambat gerakan dan senjata mereka secara drastis."
+                },
+                {
+                    key: "E",
+                    name: "LIGHTSPEED",
+                    type: "Signature",
+                    description: "GUNAKAN untuk bergerak secepat kilat. Tekan FIRE untuk dash ke depan dua kali. Tekan ALT FIRE untuk dash sekali. Hanya dash pertama yang bisa membawamu ke atas."
+                },
+                {
+                    key: "C",
+                    name: "RETRACT",
+                    type: "Ability",
+                    description: "SEKETIKA menciptakan suar cahaya di lantai. AKTIFKAN ULANG untuk kembali ke suarmu sebagai setitik cahaya murni. Kamu kebal saat bergerak."
+                },
+                {
+                    key: "X",
+                    name: "CONVERGENT PATHS",
+                    type: "Ultimate",
+                    description: "GUNAKAN untuk memfokuskan kekuatan prismatikmu. Tekan FIRE untuk menciptakan bayangan dirimu sendiri yang kemudian memancarkan cahaya. Setelah beberapa saat, kecepatanmu meningkat tajam dan cahaya meluas, menyebabkan pemain lain di area itu terkena Hinder."
+                }
+            ],
+
+            "Vyse": [
+                {
+                    key: "Q",
+                    name: "SHEAR",
+                    type: "Ability",
+                    description: "GUNAKAN filamen dari logam cair. Tekan FIRE untuk menempatkan perangkap dinding tersembunyi. Saat musuh melintas, dinding yang tidak bisa hancur akan muncul dari dalam tanah di belakang mereka. Dinding ini bertahan selama beberapa saat sebelum menghilang."
+                },
+                {
+                    key: "E",
+                    name: "ARC ROSE",
+                    type: "Signature",
+                    description: "GUNAKAN Arc Rose. Targetkan permukaan dan tekan FIRE untuk menempatkan Arc Rose yang sudah disembunyikan, atau tekan ALT Fire untuk menempatkan Arc Rose melewatinya. GUNAKAN LAGI untuk membuat silau semua pemain yang melihatnya. Ability ini bisa diambil untuk DIKERAHKAN LAGI."
+                },
+                {
+                    key: "C",
+                    name: "RAZORVINE",
+                    type: "Ability",
+                    description: "GUNAKAN sarang dari logam cair. Tekan FIRE untuk meluncurkan. Saat mendarat, sarang menjadi tidak terlihat. Saat DIAKTIFKAN, ini akan menyebar menjadi sarang razorvine besar yang menerapkan utilitas slow dan damage pada semua pemain yang melewatinya."
+                },
+                {
+                    key: "X",
+                    name: "STEEL GARDEN",
+                    type: "Ultimate",
+                    description: "GUNAKAN semak belukar dari logam cair. Tekan FIRE untuk mengeluarkan logam yang menyembur dari Vyse sebagai semburan duri logam. Kemudian, JAMMING senjata utama musuh setelah windup singkat."
+                }
+            ],
+
+            "Viper": [
+                {
+                    key: "Q",
+                    name: "POISON CLOUD",
+                    type: "Ability",
+                    description: "EQUIP pemancar gas. FIRE untuk melempar pemancar yang terus ada sepanjang ronde. RE-USE ability ini untuk menciptakan awan gas beracun tinggi dengan mengorbankan bahan bakar. Ability ini bisa diambil untuk REDEPLOY sebelum ronde dimulai dan bisa di-RE-USE lebih dari satu kali sepanjang ronde."
+                },
+                {
+                    key: "E",
+                    name: "TOXIC SCREEN",
+                    type: "Signature",
+                    description: "SIAGAKAN pelontar pemancar gas. TEMBAK untuk mengerahkan sebaris panjang pemancar gas. GUNAKAN LAGI kemampuan ini untuk membuat dinding gas beracun tinggi dengan mengorbankan bahan bakar. Kemampuan ini bisa DIGUNAKAN LAGI lebih dari sekali."
+                },
+                {
+                    key: "C",
+                    name: "SNAKE BITE",
+                    type: "Ability",
+                    description: "SIAGAKAN pelontar kimia. TEMBAK untuk melontarkan tabung yang pecah saat membentur lantai, menghasilkan zona kimia tahan lama yang mencederai dan memperlambat musuh."
+                },
+                {
+                    key: "X",
+                    name: "VIPER'S PIT",
+                    type: "Ultimate",
+                    description: "SIAGAKAN penyemprot kimia. TEMBAK untuk menyemprotkan awan kimia ke segala arah di sekitar Viper, menghasilkan awan besar yang mengurangi jangkauan pandangan dan kesehatan maks pemain di dalamnya."
+                }
+            ],
+
+            "Veto": [
+                {
+                    key: "Q",
+                    name: "CHOKEHOLD",
+                    type: "Ability",
+                    description: "GUNAKAN fragmen kental dari mutasimu. TEKAN FIRE untuk melempar. Fragmen ini akan aktif saat mengenai target, menciptakan perangkap untuk menahan musuh di tempat. Musuh yang tertahan akan terkena efek Deafen dan Decay. Musuh bisa menghancurkan perangkap sebelum diaktifkan."
+                },
+                {
+                    key: "E",
+                    name: "INTERCEPTOR",
+                    type: "Signature",
+                    description: "GUNAKAN Interceptor. TEKAN FIRE untuk menempatkan Interceptor di lokasi yang diproyeksikan. Setelah ditempatkan, GUNAKAN LAGI untuk mengaktifkan. Setelah aktif, Interceptor akan menghancurkan semua utility yang akan MEMANTUL dari pemain dan/atau hancur sendiri oleh tembakan. Musuh bisa menghancurkan Interceptor."
+                },
+                {
+                    key: "C",
+                    name: "CROSSCUT",
+                    type: "Ability",
+                    description: "GUNAKAN vortex. TEKAN FIRE untuk menempatkan di darat. Saat dalam jangkauan dan melihat vortex, AKTIFKAN ULANG untuk berteleportasi ke vortex. Selama BUY PHASE, vortex bisa diambil kembali untuk DI-REDEPLOY."
+                },
+                {
+                    key: "X",
+                    name: "EVOLUTION",
+                    type: "Ultimate",
+                    description: "SEKETIKA mulai bermutasi sepenuhnya, mendapatkan combat stim, regenerasi, dan menjadi KEBAL terhadap segala bentuk debuff."
+                }
+            ],
+
+            "Tejo": [
+                {
+                    key: "Q",
+                    name: "SPECIAL DELIVERY",
+                    type: "Ability",
+                    description: "GUNAKAN granat lengket. Tekan FIRE untuk meluncurkan. Granat akan menempel pada permukaan pertama yang terkena kontak. Granat itu kemudian meledak dan menerapkan utilitas Concuss pada target yang terjebak dalam ledakan. Tekan ALT FIRE untuk meluncurkan granat dengan satu pantulan."
+                },
+                {
+                    key: "E",
+                    name: "STEALTH DRONE",
+                    type: "Signature",
+                    description: "GUNAKAN stealth drone. Tekan FIRE untuk melempar drone ke depan, dan kendalikan gerakannya secara langsung. Tekan FIRE lagi untuk memicu denyutan yang menerapkan utilitas Suppress dan mengungkap musuh yang terkena."
+                },
+                {
+                    key: "C",
+                    name: "GUIDED SALVO",
+                    type: "Ability",
+                    description: "GUNAKAN sistem penarget dengan bantuan AR. Tekan FIRE untuk memilih hingga dua lokasi target di peta. Tekan ALT FIRE untuk meluncurkan misil yang bergerak sendiri ke lokasi target dan meledak saat mendarat."
+                },
+                {
+                    key: "X",
+                    name: "ARMAGEDDON",
+                    type: "Ultimate",
+                    description: "GUNAKAN peta taktis yang menarget serangan. Tekan FIRE untuk memilih titik awal serangan. Tekan FIRE lagi untuk menetapkan titik akhir dan meluncurkan serangan, melepaskan gelombang ledakan di sepanjang jalur serangan. Tekan ALT FIRE selama penargetan peta untuk membatalkan titik awal."
+                }
+            ],
+
+            "Sova": [
+                {
+                    key: "Q",
+                    name: "SHOCK BOLT",
+                    type: "Ability",
+                    description: "SIAGAKAN busur dengan shock bolt. TEMBAK untuk mengirim petir ledakan, terdetonasi saat tumbukan dan mencederai pemain di sekitar. TAHAN TEMBAKAN untuk memperluas jangkauan proyektil. TEMBAK ALT untuk menambahkan sampai dua pantulan untuk anak panah ini."
+                },
+                {
+                    key: "E",
+                    name: "RECON BOLT",
+                    type: "Signature",
+                    description: "SIAGAKAN busur dengan recon bolt. TEMBAK untuk menembakkan recon bolt ke depan, diaktifkan saat tumbukan dan Mengungkap lokasi musuh di sekitar yang ada di garis pandang bolt. Musuh bisa menghancurkan bolt ini. TAHAN TEMBAKAN untuk memperluas jangkauan proyektil. TEMBAK ALT untuk menambahkan sampai dua pantulan untuk anak panah ini."
+                },
+                {
+                    key: "C",
+                    name: "OWL DRONE",
+                    type: "Ability",
+                    description: "SIAGAKAN owl drone. TEMBAK untuk mengerahkan dan mengendalikan gerakan drone. Saat mengendalikan drone, TEMBAK untuk menembakkan panah penanda. Panah ini akan Mengungkap lokasi pemain mana pun yang dikenainya. Musuh bisa menghancurkan Owl Drone."
+                },
+                {
+                    key: "X",
+                    name: "HUNTER'S FURY",
+                    type: "Ultimate",
+                    description: "SIAGAKAN busur dengan tiga ledakan energi jarak jauh penembus dinding. TEMBAK untuk melepas garis ledakan energi di depan Sova, mencederai dan mengungkap lokasi musuh dalam jalur tembakannya. Kemampuan ini bisa DIGUNAKAN LAGI sampai dua kali lagi selama pewaktu kemampuan aktif."
+                }
+            ],
+
+            "Skye": [
+                {
+                    key: "Q",
+                    name: "TRAILBLAZER",
+                    type: "Ability",
+                    description: "SIAGAKAN hiasan macan Tasmania. TEMBAK untuk mengeluarkannya dan mengendalikan sang predator. Saat memegang kendali, TEMBAK untuk melompat maju, menghasilkan ledakan mengguncang dan melukai musuh yang terkena langsung."
+                },
+                {
+                    key: "E",
+                    name: "GUIDING LIGHT",
+                    type: "Signature",
+                    description: "SIAGAKAN hiasan elang. TEMBAK untuk melemparnya maju. TAHAN TEMBAKAN untuk memandu elang ke arah penanda sasaranmu. GUNAKAN LAGI saat elang terbang untuk mengubahnya menjadi kilat yang mengonfirmasi tembakan saat ada musuh dalam jangkauan tembak dan pandang."
+                },
+                {
+                    key: "C",
+                    name: "REGROWTH",
+                    type: "Ability",
+                    description: "SIAGAKAN hiasan penyembuh. TAHAN TEMBAKAN untuk menyalurkan, menyembuhkan sekutu dalam jangkauan kemampuan dan pandang. Bisa digunakan lagi sampai cadangan penyembuhnya habis. Skye tak bisa menyembuhkan dirinya sendiri."
+                },
+                {
+                    key: "X",
+                    name: "SEEKERS",
+                    type: "Ultimate",
+                    description: "SIAGAKAN hiasan Seeker. TEMBAK untuk mengeluarkan tiga Seeker untuk melacak tiga musuh terdekat. Jika mencapai targetnya, Seeker membuatnya Nearsight. Musuh bisa menghancurkan Seeker."
+                }
+            ],
+
+            "Sage": [
+                {
+                    key: "Q",
+                    name: "SLOW ORB",
+                    type: "Ability",
+                    description: "SIAGAKAN slowing orb. TEMBAK untuk melempar slowing orb ke depan yang meledak saat mendarat, menghasilkan medan tahan lama yang memperlambat pemain yang ada di dalamnya."
+                },
+                {
+                    key: "E",
+                    name: "HEALING ORB",
+                    type: "Signature",
+                    description: "SIAGAKAN healing orb. TEMBAK dengan penanda sasaran pada sekutu yang cedera untuk mengaktifkan sembuh seiring waktu pada mereka. TEMBAK ALT saat Sage cedera untuk mengaktifkan sembuh seiring waktu mandiri."
+                },
+                {
+                    key: "C",
+                    name: "BARRIER ORB",
+                    type: "Ability",
+                    description: "SIAGAKAN barrier orb. TEMBAK untuk menempatkan dinding kokoh. TEMBAK ALT untuk memutar penarget."
+                },
+                {
+                    key: "X",
+                    name: "RESURRECTION",
+                    type: "Ultimate",
+                    description: "SIAGAKAN kemampuan pembangkitan. TEMBAK dengan penanda sasaran pada sekutu yang mati untuk mulai membangkitkan mereka. Setelah penyaluran singkat, sekutu akan hidup kembali dengan kesehatan penuh."
+                }
+            ],
+
+            "Reyna": [
+                {
+                    key: "Q",
+                    name: "DEVOUR",
+                    type: "Ability",
+                    description: "Musuh yang dibunuh oleh Reyna meninggalkan Soul Orb yang bertahan 3 detik. SEGERA konsumsi soul orb di sekitar, sembuh dengan cepat dalam waktu singkat. Kesehatan yang diraih karena keahlian ini dan melebihi 100 akan melemah seiring waktu. Jika MAHARANI aktif, keahlian ini keluar otomatis dan tak mengonsumsi soul orb."
+                },
+                {
+                    key: "E",
+                    name: "DISMISS",
+                    type: "Signature",
+                    description: "SEGERA konsumsi Soul Orb di sekitar, jadi tak berwujud untuk waktu singkat. Jika MAHARANI aktif, juga jadi tak terlihat."
+                },
+                {
+                    key: "C",
+                    name: "LEER",
+                    type: "Ability",
+                    description: "SIAGAKAN mata hantu yang tak bisa dihancurkan. AKTIFKAN untuk mengeluarkan mata dalam jarak pendek ke depan. Mata akan membuat semua musuh yang melihatnya terkena Rabun Jauh."
+                },
+                {
+                    key: "X",
+                    name: "EMPRESS",
+                    type: "Ultimate",
+                    description: "SEGERA jadi kesetanan, meningkatkan kecepatan tembak, siaga, dan isi ulang secara dramatis. Mencetak angka bunuh memperbarui durasi."
+                }
+            ],
+
+            "Raze": [
+                {
+                    key: "Q",
+                    name: "BLAST PACK",
+                    type: "Ability",
+                    description: "SEGERA melempar Blast Pack yang menempel ke permukaan. GUNAKAN LAGI kemampuan ini setelah pengerahan untuk mendetonasi, merusak, dan mementalkan semua yang dikenai. Raze tidak menerima kerusakan dari kemampuan ini, tetapi akan menerima kerusakan karena jatuh jika terpental cukup tinggi."
+                },
+                {
+                    key: "E",
+                    name: "PAINT SHELLS",
+                    type: "Signature",
+                    description: "SIAGAKAN granat klaster. TEMBAK untuk melempar granat, yang menghasilkan damage dan sub-amunisi, masing-masing menghasilkan damage pada siapa saja dalam jangkauan. TEMBAK ALT untuk melempar tinggi. Charge Paint Shells direset tiap dua kill."
+                },
+                {
+                    key: "C",
+                    name: "BOOM BOT",
+                    type: "Ability",
+                    description: "SIAGAKAN Boom Bot. TEMBAK untuk mengerahkan bot, membuatnya bergerak dalam garis lurus di tanah, memantul di dinding. Boom Bot terkunci pada musuh mana pun di bagian depan runjungnya dan mengejar mereka, lalu meledak dengan kerusakan berat saat mencapai sasaran."
+                },
+                {
+                    key: "X",
+                    name: "SHOWSTOPPER",
+                    type: "Ultimate",
+                    description: "SIAGAKAN pelontar roket. TEMBAK untuk meluncurkan roket yang menghasilkan damage area masif saat bersentuhan dengan apa pun."
+                }
+            ],
+
+            "Phoenix": [
+                {
+                    key: "Q",
+                    name: "CURVEBALL",
+                    type: "Ability",
+                    description: "SIAGAKAN flare orb berjalur lengkung yang meledak sesaat setelah dilempar. TEMBAK untuk melengkungkan flare orb ke kiri, meledakkannya, dan membutakan pemain mana pun yang melihatnya. TEMBAK ALT untuk melengkungkan flare orb ke kanan."
+                },
+                {
+                    key: "E",
+                    name: "HOT HANDS",
+                    type: "Signature",
+                    description: "SIAGAKAN fireball. TEMBAK untuk melempar fireball yang meledak setelah beberapa waktu atau saat membentur tanah, menghasilkan zona api yang bertahan lama dan mencederai musuh."
+                },
+                {
+                    key: "C",
+                    name: "BLAZE",
+                    type: "Ability",
+                    description: "SIAGAKAN flame wall. TEMBAK untuk membuat garis api yang bergerak maju, membuat dinding api yang menghalangi pandangan dan mencederai pemain yang melewatinya. TAHAN TEMBAKAN untuk membelokkan dinding ke arah penanda sasaranmu."
+                },
+                {
+                    key: "X",
+                    name: "RUN IT BACK",
+                    type: "Ultimate",
+                    description: "SEGERA tempatkan penanda di lokasi Phoenix. Saat kemampuan ini aktif, mati atau membiarkan pewaktu habis akan mengakhiri kemampuan ini dan mengembalikan Phoenix ke lokasi ini dengan health penuh."
+                }
+            ],
+
+            "Jett": [
+                {
+                    key: "Q",
+                    name: "UPDRAFT",
+                    type: "Ability",
+                    description: "SEGERA melempar Jett tinggi ke udara."
+                },
+                {
+                    key: "E",
+                    name: "TAILWIND",
+                    type: "Signature",
+                    description: "AKTIFKAN untuk menyiapkan embusan angin selama beberapa saat. GUNAKAN KEMBALI angin untuk melempar Jett ke arah dia bergerak. Jika Jett berdiri diam, dia akan terlempar ke depan. Charge Tailwind direset tiap dua kill."
+                },
+                {
+                    key: "C",
+                    name: "CLOUDBURST",
+                    type: "Ability",
+                    description: "SEGERA melempar proyektil yang membesar menjadi awan penghalang pandangan singkat saat membentur permukaan. TAHAN tombol kemampuan untuk membelokkan asap ke arah penanda sasaranmu."
+                },
+                {
+                    key: "X",
+                    name: "BLADE STORM",
+                    type: "Ultimate",
+                    description: "SIAGAKAN satu set pisau lempar akurasi tinggi. TEMBAK untuk melempar satu pisau dan recharge pisau saat melakukan kill. TEMBAK ALT untuk melempar sisa belati, tetapi tidak recharge saat melakukan kill."
+                }
+            ],
+
+            "Iso": [
+                {
+                    key: "Q",
+                    name: "UNDERCUT",
+                    type: "Ability",
+                    description: "SIAGAKAN petir molekuler. Tembak untuk melemparnya ke depan, menerapkan FRAGILE sesaat ke semua pemain yang disentuhnya. Petir dapat menembus benda padat, termasuk dinding."
+                },
+                {
+                    key: "E",
+                    name: "DOUBLE TAP",
+                    type: "Signature",
+                    description: "MULAI timer fokus. Setelah selesai, masuki kondisi fokus. Musuh yang kamu jatuhkan atau bunuh akan menghasilkan orb energi. Menembak orb ini akan memberimu perisai yang menyerap satu damage dari sumber mana pun."
+                },
+                {
+                    key: "C",
+                    name: "CONTINGENCY",
+                    type: "Ability",
+                    description: "SIAGAKAN untuk merakit energi prismatik. TEMBAK untuk mendorong dinding energi yang tak bisa hancur untuk menghalangi peluru."
+                },
+                {
+                    key: "X",
+                    name: "KILL CONTRACT",
+                    type: "Ultimate",
+                    description: "SIAGAKAN arena interdimensi. TEMBAK untuk melemparkan selajur energi ke seluruh medan perang, menarikmu dan musuh pertama yang terkena ke dalam arena. Kamu dan lawan berduel sampai titik darah penghabisan."
+                }
+            ],
+
+            "Harbor": [
+                {
+                    key: "Q",
+                    name: "COVE",
+                    type: "Ability",
+                    description: "EQUIP Cove. AKTIFKAN untuk membentuk Asap air di lokasi yang dipilih. HOLD FIRE saat menarget untuk menjauhkan penanda, dan HOLD ALT FIRE untuk mendekatkannya. Tekan RELOAD untuk berganti tampilan penargetan. AKTIFKAN ULANG untuk memberi Shield pada Asap air sehingga peluru tidak bisa menembus. Asap air yang diberi Shield bisa dihancurkan."
+                },
+                {
+                    key: "E",
+                    name: "HIGH TIDE",
+                    type: "Signature",
+                    description: "EQUIP High Tide. Tekan FIRE untuk melempar air ke depan di sepanjang daratan. HOLD FIRE untuk mengarahkan air ke crosshair-mu, memunculkan Layar yang menghalangi pandangan di sepanjang jalur air. Tekan ALT FIRE untuk menghentikan air lebih awal. Semua pemain yang melewati High Tide akan terkena Slow."
+                },
+                {
+                    key: "C",
+                    name: "strom surge",
+                    type: "Ability",
+                    description: "EQUIP Storm Surge. Tekan FIRE untuk melempar, menciptakan pusaran air eksplosif yang menerapkan Nearsight dan Slow pada musuh di dalamnya setelah beberapa saat."
+                },
+                {
+                    key: "X",
+                    name: "RECKONING",
+                    type: "Ultimate",
+                    description: "EQUIP Reckoning. Tekan FIRE untuk melepaskan kekuatan penuh artefakmu, melepaskan semburan air yang melesat maju untuk menerapkan Nearsight dan Slow pada musuh yang terkena."
+                }
+            ],
+
+            "Gekko": [
+                {
+                    key: "Q",
+                    name: "WINGMAN",
+                    type: "Ability",
+                    description: "SIAGAKAN Wingman TEMBAK untuk mengirim Wingman mencari musuh. Wingman melepaskan ledakan concussive ke musuh pertama yang dilihatnya TEMBAK ALT saat menargetkan lokasi Spike atau Spike yang ditempatkan agar Wingman menjinakkan atau menempatkan Spike. Untuk menempatkan, Gekko harus punya Spike di inventarisnya. Saat Wingman berakhir, dia kembali ke globule yang tidak aktif INTERAKSI untuk mengambil kembali globule dan memperoleh charge Wingman lagi setelah cooldown singkat."
+                },
+                {
+                    key: "E",
+                    name: "DIZZY",
+                    type: "Signature",
+                    description: "SIAGAKAN Dizzy TEMBAK untuk mengirim Dizzy melesat ke udara. Dizzy charge lalu melepaskan ledakan plasma ke musuh di garis pandang. Musuh yang terkena plasmanya akan terkena efek blind. Saat Dizzy berakhir, dia kembali ke globule yang tidak aktif INTERAKSI untuk mengambil kembali globule dan memperoleh charge Dizzy lagi setelah cooldown singkat."
+                },
+                {
+                    key: "C",
+                    name: "MOSH PIT",
+                    type: "Ability",
+                    description: "SIAGAKAN Mosh TEMBAK untuk melempar Mosh seperti granat TEMBAK ALT untuk melakukan lemparan bawah. Setelah mendarat, Mosh menjadi banyak di area yang luas lalu sesaat kemudian meledak."
+                },
+                {
+                    key: "X",
+                    name: "THRASH",
+                    type: "Ultimate",
+                    description: "SIAGAKAN Thrash TEMBAK untuk terhubung dengan pikiran Thrash dan mengarahkannya di wilayah musuh AKTIFKAN untuk menerjang ke depan dan meledak, menahan musuh dalam radius kecil. Saat Thrash berakhir, dia kembali ke globule yang tidak aktif INTERAKSI untuk mengambil kembali globule dan memperoleh charge Thrash lagi setelah cooldown singkat. Thrash bisa diambil kembali satu kali."
+                }
+            ],
+
+            "Fade": [
+                {
+                    key: "Q",
+                    name: "SEIZE",
+                    type: "Ability",
+                    description: "Siagakan orb tinta mimpi buruk. TEMBAK untuk melempar orb yang akan jatuh ke tanah setelah durasi waktu tertentu. Saat menyentuh tanah, tinta akan meledak dan menciptakan zona. Musuh yang tertangkap di dalamnya tidak bisa keluar dari zona tersebut dengan cara biasa. GUNAKAN LAGI ability ini untuk menjatuhkan proyektil di awal peluncurannya."
+                },
+                {
+                    key: "E",
+                    name: "HAUNT",
+                    type: "Signature",
+                    description: "Siagakan entitas mimpi buruk. TEMBAK untuk melempar orb yang akan jatuh ke tanah setelah durasi waktu tertentu. Saat menyentuh tanah, orb akan berubah menjadi entitas mimpi buruk, lalu mengungkap lokasi musuh yang tertangkap di garis pandangnya. Musuh bisa menghancurkan entitas ini. GUNAKAN LAGI ability ini untuk menjatuhkan proyektil di awal peluncurannya."
+                },
+                {
+                    key: "C",
+                    name: "PROWLER",
+                    type: "Ability",
+                    description: "SIAGAKAN Prowler. TEMBAK akan meluncurkan Prowler yang melaju dalam garis lurus. Prowler akan mengunci musuh atau jejak apa pun di kerucut pandang depan dan mengejar mereka, memberikan efek nearsight jika menjangkau mereka. TAHAN tombol TEMBAK untuk mengarahkan Prowler ke crosshair."
+                },
+                {
+                    key: "X",
+                    name: "NIGHTFALL",
+                    type: "Ultimate",
+                    description: "SIAGAKAN kekuatan ketakutan. TEMBAK untuk mengeluarkan gelombang energi mimpi buruk yang bisa menembus dinding. Energi menciptakan jejak ke lawan serta memekakkan telinga dan meluruhkan mereka."
+                }
+            ],
+
+            "Deadlock": [
+                {
+                    key: "Q",
+                    name: "GRAVNET",
+                    type: "Ability",
+                    description: "Lemparkan granat nanowire yang memperlambat musuh.SIAGAKAN granat GravNet. TEMBAK untuk melempar. TEMBAK ALT untuk melempar tinggi granat. GravNet meledak saat mendarat, memaksa musuh yang terjebak di dalamnya untuk merunduk dan bergerak perlahan."
+                },
+                {
+                    key: "E",
+                    name: "SONIC SENSOR",
+                    type: "Signature",
+                    description: "SIAGAKAN Sonic Sensor. TEMBAK untuk mengerahkan. Sensor memantau area untuk mendeteksi musuh yang mengeluarkan suara. Area itu akan terkena efek concuss jika langkah kaki, tembakan senjata, atau suara bising terdeteksi."
+                },
+                {
+                    key: "C",
+                    name: "BARRIER MESH",
+                    type: "Ability",
+                    description: "SIAGAKAN cakram Barrier Mesh. TEMBAK untuk melempar ke depan. Saat mendarat, cakram menghasilkan penghalang dari titik asal yang menghalangi pergerakan agen."
+                },
+                {
+                    key: "X",
+                    name: "ANNIHILATION",
+                    type: "Ultimate",
+                    description: "SIAGAKAN Nanowire Accelerator. TEMBAK untuk melepaskan gelombang nanowire yang menangkap musuh pertama yang bersinggungan. Musuh yang terkepung ditarik sepanjang jalur nanowire dan akan mati jika mencapai ujungnya, kecuali mereka dibebaskan. Lilitan nanowire dapat dihancurkan."
+                }
+            ],
+
+            "Cypher": [
+                {
+                    key: "Q",
+                    name: "CYBER CAGE",
+                    type: "Ability",
+                    description: "SEGERA melempar cyber cage ke depan Cypher. Aktifkan untuk membuat zona yang menghalangi pandangan dan memperlambat musuh yang melewatinya."
+                },
+                {
+                    key: "E",
+                    name: "TRAPWIRE",
+                    type: "Signature",
+                    description: "SIAGAKAN trapwire. TEMBAK untuk menempatkan tripwire tersembunyi yang bisa dihancurkan di lokasi target, menghasilkan bentangan garis antara lokasi penempatan dan dinding di seberangnya. Pemain musuh yang melewati trapwire akan tertambat, terungkap, dan tersentak setelah beberapa saat jika mereka tak segera menghancurkan perangkat ini. Kemampuan ini bisa diambil untuk DIKERAHKAN LAGI."
+                },
+                {
+                    key: "C",
+                    name: "SPYCAM",
+                    type: "Ability",
+                    description: "SIAGAKAN spycam. TEMBAK untuk menempatkan spycam di lokasi target. GUNAKAN LAGI ability ini untuk mengendalikan tampilan kamera. Saat mengendalikan kamera, TEMBAK untuk menembakkan panah penanda. Panah ini akan Mengungkap lokasi pemain mana pun yang dikenainya. Ability ini bisa diambil untuk DIKERAHKAN LAGI."
+                },
+                {
+                    key: "X",
+                    name: "NEURAL THEFT",
+                    type: "Ultimate",
+                    description: "SEGERA gunakan pada pemain musuh yang mati di penanda sasaranmu untuk mengungkap lokasi semua pemain musuh yang hidup."
+                }
+            ],
+
+            "Clove": [
+                {
+                    key: "Q",
+                    name: "MEDDLE",
+                    type: "Ability",
+                    description: "EQUIP fragmen dari esensi keabadian. FIRE untuk melempar fragmen, meledak setelah penundaan singkat dan untuk sementara waktu memberi efek decay pada semua target yang terperangkap di dalamnya."
+                },
+                {
+                    key: "E",
+                    name: "RUSE",
+                    type: "Signature",
+                    description: "EQUIP untuk menampilkan medan pertempuran. FIRE untuk mengatur lokasi pendaratan awan Clove. ALT FIRE untuk mengonfirmasi, meluncurkan awan yang menghalangi pandangan di area yang dipilih. Clove bisa menggunakan ability ini setelah mati."
+                },
+                {
+                    key: "C",
+                    name: "PICK-ME-UP",
+                    type: "Ability",
+                    description: "LANGSUNG menyerap kekuatan hidup musuh yang tumbang karena terkena damage atau kill oleh Clove, mendapatkan haste dan health sementara."
+                },
+                {
+                    key: "X",
+                    name: "NOT DEAD YET",
+                    type: "Ultimate",
+                    description: "Setelah mati, ACTIVATE untuk bangkit. Setelah bangkit, Clove harus mendapatkan kill atau assist penghasil damage dalam waktu yang ditentukan atau mereka akan mati."
+                }
+            ],
+
+            "Chamber": [
+                {
+                    key: "Q",
+                    name: "HEADHUNTER",
+                    type: "Ability",
+                    description: "AKTIFKAN untuk menyiagakan pistol berat. TEMBAK ALT dengan pistol yang disiagakan untuk mengarahkan bidikan ke bawah."
+                },
+                {
+                    key: "E",
+                    name: "RENDEZVOUS",
+                    type: "Signature",
+                    description: "SIAGAKAN jangkar teleportasi. TEMBAK untuk menempatkannya di lantai. Saat berada di lantai dan dalam jangkauan jangkar, AKTIFKAN ULANG untuk berteleportasi dengan cepat ke jangkar itu. Jangkar bisa diambil untuk DIKERAHKAN LAGI."
+                },
+                {
+                    key: "C",
+                    name: "TRADEMARK",
+                    type: "Ability",
+                    description: "SIAGAKAN jebakan yang memindai musuh. TEMBAK untuk menempatkannya di lantai. Ketika musuh yang terlihat masuk ke dalam jangkauan, jebakan akan menghitung mundur lalu membuat medan di sekitar mereka tidak stabil, menciptakan medan tahan lama yang menerapkan Slow ke pemain yang terperangkap di dalamnya. Jebakan bisa diambil untuk DIKERAHKAN LAGI."
+                },
+                {
+                    key: "X",
+                    name: "TOUR DE FORCE",
+                    type: "Ultimate",
+                    description: "AKTIFKAN untuk memanggil senapan penembak runduk kustom dan kuat, yang akan membunuh musuh dengan tembakan langsung ke tubuh bagian atas. TEMBAK ALT untuk membidik. Membunuh musuh akan menciptakan medan tahan lama yang akan menerapkan Slow ke pemain yang terperangkap di dalamnya."
+                }
+            ],
+
+            "Brimstone": [
+                {
+                    key: "Q",
+                    name: "INCENDIARY",
+                    type: "Ability",
+                    description: "SIAGAKAN pelontar granat incendiary. TEMBAK untuk meluncurkan granat yang meledak saat mencapai lantai, menghasilkan zona api tahan lama yang mencederai pemain dalam zona tersebut."
+                },
+                {
+                    key: "E",
+                    name: "SKY SMOKE",
+                    type: "Signature",
+                    description: "SIAGAKAN peta taktis. TEMBAK untuk menentukan lokasi pendaratan awan asap Brimstone. TEMBAK ALT untuk mengonfirmasi, meluncurkan awan asap tahan lama yang menghalangi pandangan di area yang terpilih."
+                },
+                {
+                    key: "C",
+                    name: "STIM BEACON",
+                    type: "Ability",
+                    description: "SIAGAKAN a stim beacon. TEMBAK untuk melempar stim beacon di depan Brimstone. Saat mendarat, stim beacon akan menciptakan medan yang menghadiahkan Tembak Cepat pada pemain."
+                },
+                {
+                    key: "X",
+                    name: "ORBITAL STRIKE",
+                    type: "Ultimate",
+                    description: "SIAGAKAN peta taktis. TEMBAK untuk meluncurkan laser serangan orbital tahan lama di lokasi terpilih, menghasilkan kerusakan seiring waktu tinggi pada pemain yang ada di area terpilih."
+                }
+            ],
+
+            "Yoru": [
+                {
+                    key: "Q",
+                    name: "BLINDSIDE",
+                    type: "Ability",
+                    description: "SIAGAKAN untuk mencabik retakan dimensi tak stabil dari kenyataan. TEMBAK untuk melempar retakan, mengaktifkan kilat yang dimulai saat bersentuhan dengan permukaan keras di medan tempur."
+                },
+                {
+                    key: "E",
+                    name: "GATECRASH",
+                    type: "Signature",
+                    description: "SIAGAKAN rift tether TEMBAK untuk mengirim tether ke depan. TEMBAK ALT untuk menempatkan tether stasioner. AKTIFKAN untuk berteleportasi ke lokasi tether. GUNAKAN untuk memicu teleportasi palsu."
+                },
+                {
+                    key: "C",
+                    name: "FAKEOUT",
+                    type: "Ability",
+                    description: "SIAGAKAN gema yang berubah menjadi bayangan cermin Yoru saat diaktifkan. TEMBAK untuk langsung mengaktifkan bayangan cermin dan mengirimnya ke depan. TEMBAK ALT untuk menempatkan gema nonaktif. GUNAKAN untuk mengubah gema nonaktif menjadi bayangan cermin dan mengirimnya ke depan. Bayangan cermin meledak dalam sekejap dan menyilaukan ketika dihancurkan oleh musuh."
+                },
+                {
+                    key: "X",
+                    name: "DIMENSIONAL DRIFT",
+                    type: "Ultimate",
+                    description: "SIAGAKAN topeng yang bisa melihat di antara dimensi. TEMBAK untuk menjelajah dimensi Yoru, tak bisa dipengaruhi atau dilihat musuh dari luar. AKTIFKAN ULANG untuk keluar dari dimensi Yoru lebih awal."
+                }
+            ],
+
+            "Omen": [
+                {
+                    key: "Q",
+                    name: "PARANOIA",
+                    type: "Ability",
+                    description: "SEGERA menembakkan proyektil bayangan ke depan, mengurangi jangkauan pandangan semua pemain yang disentuhnya untuk sesaat. Proyektil ini bisa menembus dinding."
+                },
+                {
+                    key: "E",
+                    name: "DARK COVER",
+                    type: "Signature",
+                    description: "SIAGAKAN shadow orb, memasuki dunia transisi untuk menempatkan dan menarget orb. TEKAN tombol ability untuk melempar shadow orb ke lokasi yang ditandai, menciptakan bidang bayangan tahan lama yang menghalangi pandangan. TAHAN TEMBAK saat menarget untuk menjauhkan penanda. TAHAN TEMBAK ALT saat menarget untuk mendekatkan penanda. TEKAN RELOAD untuk beralih ke tampilan penargetan normal."
+                },
+                {
+                    key: "C",
+                    name: "SHROUDED STEP",
+                    type: "Ability",
+                    description: "SIAGAKAN kemampuan shadow walk dan lihat indikator jangkauannya. TEMBAK untuk memulai penyaluran singkat, lalu teleportasi ke lokasi yang ditandai"
+                },
+                {
+                    key: "X",
+                    name: "FROM THE SHADOWS",
+                    type: "Ultimate",
+                    description: "SIAGAKAN peta taktis. TEMBAK untuk berteleportasi ke lokasi terpilih. Saat teleportasi, Omen muncul sebagai Shade yang bisa dihancurkan oleh musuh untuk membatalkan teleportasinya."
+                }
+            ],
+
+            "Neon": [
+                {
+                    key: "Q",
+                    name: "RELAY BOLT",
+                    type: "Ability",
+                    description: "SEKETIKA melemparkan energy bolt yang memantul satu kali. Saat mengenai permukaan, bolt menyetrum tanah di bawahnya dengan ledakan concussive."
+                },
+                {
+                    key: "E",
+                    name: "HIGH GEAR",
+                    type: "Signature",
+                    description: "SEKETIKA menyalurkan kekuatan Neon untuk meningkatkan kecepatan. Saat terisi, gunakan TEMBAKAN ALT untuk memicu luncuran listrik. Muatan luncuran direset tiap dua kill."
+                },
+                {
+                    key: "C",
+                    name: "FAST LANE",
+                    type: "Ability",
+                    description: "MENEMBAKKAN dua garis energi di atas tanah yang terbentang dalam jarak pendek atau sampai garis itu mengenai permukaan. Garis ini naik ke dinding listrik statis yang menghalangi pandangan dan menghasilkan damage pada musuh yang melewatinya."
+                },
+                {
+                    key: "X",
+                    name: "OVERDRIVE",
+                    type: "Ultimate",
+                    description: "Melepaskan tenaga dan kecepatan penuh Neon selama beberapa saat. TEMBAKKAN untuk menyalurkan kekuatan itu ke cahaya kilat yang mematikan dengan akurasi gerakan tinggi. Durasi ini direset di tiap kill."
+                }
+            ],
+
+            "Killjoy": [
+                {
+                    key: "Q",
+                    name: "ALARM BOT",
+                    type: "Ability",
+                    description: "SIAGAKAN Alarmbot tersembunyi. TEMBAK untuk mengerahkan bot pemburu musuh yang masuk dalam jangkauan. Setelah mencapai target, bot meledak, menerapkan Rentan. TAHAN SIAGA untuk memanggil kembali bot yang dikerahkan."
+                },
+                {
+                    key: "E",
+                    name: "TURRET",
+                    type: "Signature",
+                    description: "SIAGAKAN Turet. TEMBAK untuk mengerahkan turet yang menembak musuh dalam sudut 180 derajat. TAHAN SIAGA untuk memanggil kembali turet yang dikerahkan."
+                },
+                {
+                    key: "C",
+                    name: "NANOSWARM",
+                    type: "Ability",
+                    description: "SIAGAKAN granat Nanoswarm. TEMBAK untuk melempar granat. Saat mendarat, Nanoswarm jadi tersembunyi. AKTIFKAN Nanoswarm untuk mengerahkan kerumunan nanobot perusak."
+                },
+                {
+                    key: "X",
+                    name: "LOCKDOWN",
+                    type: "Ultimate",
+                    description: "SIAGAKAN perangkat Belenggu. TEMBAK untuk mengerahkan perangkat. Setelah selesai, perangkat Menahan semua musuh yang tertangkap di dalam radius. Perangkat bisa dihancurkan musuh."
+                }
+            ],
+
+            "KAY/O": [
+                {
+                    key: "Q",
+                    name: "FLASH/DRIVE",
+                    type: "Ability",
+                    description: "SIAGAKAN granat flash. TEMBAK untuk melakukan lemparan atas. TEMBAK ALT untuk melempar tinggi granat versi lemah yang meledak lebih cepat. Granat flash meledak setelah beberapa saat, Blind siapa pun yang melihatnya."
+                },
+                {
+                    key: "E",
+                    name: "ZERO/POINT",
+                    type: "Signature",
+                    description: "SIAGAKAN pedang suppression. TEMBAK untuk melempar. Pedang menancap ke permukaan pertama yang disentuhnya, mengumpulkan tenaga, dan Suppress siapa saja dalam radius ledakannya. Musuh bisa menghancurkan pedang ini."
+                },
+                {
+                    key: "C",
+                    name: "FRAG/MENT",
+                    type: "Ability",
+                    description: "SIAGAKAN fragmen peledak. TEMBAK untuk melempar. Fragmen ini menancap ke tanah dan meledak beberapa kali, menghasilkan kerusakan nyaris mematikan di bagian tengah tiap ledakan."
+                },
+                {
+                    key: "X",
+                    name: "NULL/CMD",
+                    type: "Ultimate",
+                    description: "SEKETIKA mengeluarkan energi radianite yang meluap bertahap dari KAY/O dalam radius yang masif. Musuh yang terkena gelombang ini mengalami Suppress untuk waktu singkat. Saat luapan energi berlebih, KAY/O mendapatkan Combat Stim dan bisa distabilkan kembali jika dia terbunuh."
+                }
+            ],
+
+            "Miks": [
+                {
+                    key: "Q",
+                    name: "HARMONIZE",
+                    type: "Ability",
+                    description: "EQUIP Harmonize. Arahkan ke sekutu dan TEMBAK untuk mengaktifkan Combat Stim pada dirimu sendiri dan sekutu tersebut. Efeknya akan diperbarui setiap kali mendapatkan kill. ALT-FIRE untuk memberikan Combat Stim hanya kepada dirimu sendiri"
+                },
+                {
+                    key: "E",
+                    name: "WAVEFORM",
+                    type: "Signature",
+                    description: "EQUIP Map Targeter. TEKAN FIRE untuk menentukan lokasi. ALT-FIRE untuk membuat Smoke muncul di lokasi yang sudah dipilih."
+                },
+                {
+                    key: "C",
+                    name: "M-PULSE",
+                    type: "Ability",
+                    description: "EQUIP M-pulse. ALT-FIRE untuk mengganti antara mode Concuss dan Healing. FIRE untuk melempar perangkat. Saat mendarat, M-pulse akan mengirimkan gelombang suara yang memberikan efek Concuss atau Healing kepada pemain."
+                },
+                {
+                    key: "X",
+                    name: "BASSQUAKE",
+                    type: "Ultimate",
+                    description: "EQUIP Bassquake. TEKAN FIRE untuk mengisi daya lalu melepaskan Sonic Radiance ke arah depan, yang akan mendorong mundur, membuat tuli, dan memperlambat pemain."
+                }
+            ],
+
+            "Brance": [
+                {
+                    key: "Q",
+                    name: "FLASHPOINT",
+                    type: "Ability",
+                    description: "EQUIP blinding charge. TEKAN FIRE untuk menempatkan ledakan cepat yang menembus dinding. Ledakan akan aktif dan membutakan semua pemain yang melihat ke arahnya"
+                },
+                {
+                    key: "E",
+                    name: "FOULT LINE",
+                    type: "Signature",
+                    description: "EQUIP seismic blast. TAHAN FIRE untuk memperbesar jarak jangkauan. LEPASKAN untuk memicu getaran, membuat semua pemain di dalam area dan sepanjang jalurnya terkena efek dazed."
+                },
+                {
+                    key: "C",
+                    name: "AFTERSHOCK",
+                    type: "Ability",
+                    description: "EQUIP fusion charge. TEKAN FIRE untuk memasang ledakan lambat yang menembus dinding. Ledakan tersebut memberikan damage besar kepada siapa pun yang berada di dalam EQUIP seismic charge. TEKAN FIRE untuk mengirimkan gelombang gempa berantai melalui seluruh permukaan tanah dalam area berbentuk kerucut besar. Gelombang tersebut membuat pemain yang terkena menjadi dazed dan terlempar ke atas.areanya."
+                },
+                {
+                    key: "X",
+                    name: "ROLLING THUNDER",
+                    type: "Ultimate",
+                    description: "EQUIP seismic charge. TEKAN FIRE untuk mengirimkan gelombang gempa berantai melalui seluruh permukaan tanah dalam area berbentuk kerucut besar. Gelombang tersebut membuat pemain yang terkena menjadi dazed dan terlempar ke atas."
+                }
+            ]
+
+        };
+
+
+        /* =====================================================
+           GET AGENT FROM URL
+        ===================================================== */
+
+        const params = new URLSearchParams(
+            window.location.search
+        );
+
+        const agentName =
+            params.get("agent") || "Astra";
+
+
+        /* =====================================================
+           GET AGENT DATA
+        ===================================================== */
+
+        const agent =
+            agents[agentName];
+
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const agentImage =
+            document.getElementById("agentImage");
+
+        const agentImageBg =
+            document.getElementById("agentImageBg");
+
+        const agentRole =
+            document.getElementById("agentRole");
+
+        const agentNameElement =
+            document.getElementById("agentName");
+
+        const agentDescription =
+            document.getElementById("agentDescription");
+
+        const abilityButtons =
+            document.getElementById("abilityButtons");
+
+        const abilityVisual =
+            document.getElementById("abilityVisual");
+
+        const abilityKeyLabel =
+            document.getElementById("abilityKeyLabel");
+
+        const abilityName =
+            document.getElementById("abilityName");
+
+        const abilityDescription =
+            document.getElementById("abilityDescription");
+
+
+        /* =====================================================
+           AGENT NOT FOUND
+        ===================================================== */
+
+        if (!agent) {
+
+            agentNameElement.textContent =
+                "AGENT NOT FOUND";
+
+            agentRole.textContent =
+                "ERROR";
+
+            agentDescription.textContent =
+                "Agent tidak ditemukan. Silakan kembali ke halaman Agent.";
+
+            agentImage.src =
+                "assets/agents/astra.avif";
+
+            agentImageBg.src =
+                "assets/agents/astra.avif";
+
+        }
+
+
+        /* =====================================================
+           LOAD AGENT
+        ===================================================== */
+
+        else {
+
+            agentImage.src =
+                agent.image;
+
+            agentImageBg.src =
+                agent.image;
+
+            agentImage.alt =
+                agentName;
+
+            agentImageBg.alt =
+                "";
+
+            agentRole.textContent =
+                agent.role;
+
+            agentNameElement.textContent =
+                agentName;
+
+            agentDescription.textContent =
+                agent.description;
+
+        }
+
+
+        /* =====================================================
+           CURRENT ABILITIES
+        ===================================================== */
+
+        const currentAbilities =
+            abilities[agentName] || [
+
+                {
+                    key: "Q",
+                    name: "ABILITY Q",
+                    type: "Ability",
+                    description:
+                        "Informasi kemampuan Agent akan ditambahkan."
+                },
+
+                {
+                    key: "E",
+                    name: "ABILITY E",
+                    type: "Signature",
+                    description:
+                        "Informasi kemampuan Agent akan ditambahkan."
+                },
+
+                {
+                    key: "C",
+                    name: "ABILITY C",
+                    type: "Ability",
+                    description:
+                        "Informasi kemampuan Agent akan ditambahkan."
+                },
+
+                {
+                    key: "X",
+                    name: "ULTIMATE",
+                    type: "Ultimate",
+                    description:
+                        "Informasi ultimate Agent akan ditambahkan."
+                }
+
+            ];
+
+
+        /* =====================================================
+           GET AUTOMATIC ABILITY IMAGE
+           
+           INI BAGIAN PALING PENTING.
+
+           Misalnya agent.image:
+
+           assets/agents/tejo.avif
+
+           maka otomatis:
+
+           Q = assets/agents/tejo-q.avif
+           E = assets/agents/tejo-e.avif
+           C = assets/agents/tejo-c.avif
+           X = assets/agents/tejo-x.avif
+
+           Viper:
+
+           viper-q.avif
+           viper-e.avif
+           viper-c.avif
+           viper-x.avif
+
+           Veto:
+
+           veto-q.avif
+           veto-e.avif
+           veto-c.avif
+           veto-x.avif
+        ===================================================== */
+
+        function getAbilityImagePath(key) {
+
+            if (!agent) {
+                return null;
+            }
+
+            /*
+             * Ambil nama file Agent
+             *
+             * assets/agents/tejo.avif
+             * menjadi:
+             * tejo
+             */
+
+            const agentFileName =
+                agent.image
+                    .split("/")
+                    .pop()
+                    .replace(/\.[^/.]+$/, "");
+
+
+            /*
+             * Buat nama gambar ability
+             */
+
+            return `assets/agents/${agentFileName}-${key.toLowerCase()}.avif`;
+
+        }
+
+
+        /* =====================================================
+           CHECK IMAGE
+        ===================================================== */
+
+        function imageExists(src, callback) {
+
+            const img =
+                new Image();
+
+            img.onload =
+                function () {
+
+                    callback(true);
+
+                };
+
+            img.onerror =
+                function () {
+
+                    callback(false);
+
+                };
+
+            img.src = src;
+
+        }
+
+
+        /* =====================================================
+           PLACEHOLDER
+        ===================================================== */
+
+        function createAbilityPlaceholder(key) {
+
+            return `
+                <div class="ability-placeholder">
+
+                    <div class="ability-placeholder-key">
+                        ${key}
+                    </div>
+
+                    <div class="ability-placeholder-text">
+                        ABILITY VISUAL
+                    </div>
+
+                </div>
+            `;
+
+        }
+
+
+        /* =====================================================
+           SHOW ABILITY
+        ===================================================== */
+
+        function showAbility(index) {
+
+            const ability =
+                currentAbilities[index];
+
+
+            if (!ability) {
+                return;
+            }
+
+
+            /* REMOVE ACTIVE */
+
+            document
+                .querySelectorAll(".ability-button")
+                .forEach(button => {
+
+                    button.classList.remove("active");
+
+                });
+
+
+            /* ACTIVE BUTTON */
+
+            const activeButton =
+                document.querySelector(
+                    `.ability-button[data-index="${index}"]`
+                );
+
+
+            if (activeButton) {
+
+                activeButton.classList.add("active");
+
+            }
+
+
+            /* UPDATE TEXT */
+
+            abilityKeyLabel.textContent =
+                ability.key;
+
+            abilityName.textContent =
+                ability.name;
+
+            abilityDescription.textContent =
+                ability.description;
+
+
+            /* =================================================
+               AUTOMATIC IMAGE
+            ================================================= */
+
+            const imagePath =
+                getAbilityImagePath(
+                    ability.key
+                );
+
+
+            if (!imagePath) {
+
+                abilityVisual.innerHTML =
+                    createAbilityPlaceholder(
+                        ability.key
+                    );
+
+                return;
+
+            }
+
+
+            /* CHECK IMAGE */
+
+            imageExists(
+                imagePath,
+                function (exists) {
+
+                    if (exists) {
+
+                        abilityVisual.innerHTML = `
+
+                            <img
+                                src="${imagePath}"
+                                alt="${ability.name}"
+                            >
+
+                        `;
+
+                    }
+
+                    else {
+
+                        abilityVisual.innerHTML =
+                            createAbilityPlaceholder(
+                                ability.key
+                            );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           CREATE ABILITY BUTTONS
+        ===================================================== */
+
+        currentAbilities.forEach(
+            (ability, index) => {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.type =
+                    "button";
+
+
+                button.className =
+                    "ability-button";
+
+
+                button.dataset.index =
+                    index;
+
+
+                button.innerHTML = `
+
+                    <span class="ability-key">
+                        ${ability.key}
+                    </span>
+
+                    <span class="ability-short">
+                        ${ability.type}
+                    </span>
+
+                `;
+
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        showAbility(index);
+
+                    }
+                );
+
+
+                abilityButtons.appendChild(
+                    button
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           FIRST ABILITY
+        ===================================================== */
+
+        showAbility(0);
+
+
+        /* =====================================================
+           AGENT IMAGE FALLBACK
+        ===================================================== */
+
+        agentImage.addEventListener(
+            "error",
+            function () {
+
+                this.src =
+                    "assets/agents/astra.avif";
+
+            }
+        );
+
+        agentImageBg.addEventListener(
+            "error",
+            function () {
+
+                this.src =
+                    "assets/agents/astra.avif";
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
